@@ -1,0 +1,24 @@
+---
+import Base         from '../layouts/Base.astro';
+import Navbar       from '../components/Navbar.astro';
+import Hero         from '../components/Hero.astro';
+import Presentation from '../components/Presentation.astro';
+import Pratiques    from '../components/Pratiques.astro';
+import Tarifs       from '../components/Tarifs.astro';
+import Lieux        from '../components/Lieux.astro';
+import Contact      from '../components/Contact.astro';
+import Footer       from '../components/Footer.astro';
+---
+<Base
+  title="Léa Millet | Psychologue Clinicienne D.E à Miramas — Autisme & Neurodéveloppement"
+  description="Léa Millet, psychologue clinicienne D.E à Miramas (13140), spécialisée dans l'autisme et les troubles neurodéveloppementaux. Bilans psychologiques, intervention précoce (ESDM/Denver), guidance parentale et groupes d'habiletés sociales pour enfants et adolescents. Prenez rendez-vous dès maintenant."
+>
+  <Navbar isHome={true} />
+  <Hero />
+  <Presentation />
+  <Pratiques />
+  <Tarifs />
+  <Lieux />
+  <Contact />
+  <Footer isHome={true} />
+</Base>

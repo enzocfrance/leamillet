@@ -1,0 +1,391 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════════════ */
+:root {
+  --spring:         cubic-bezier(0.34, 1.56, 0.64, 1);
+  --expo-out:       cubic-bezier(0.16, 1, 0.3, 1);
+  --quart-out:      cubic-bezier(0.25, 1, 0.5, 1);
+  --swipe:          cubic-bezier(0.77, 0, 0.18, 1);
+  --duration-fast:  0.2s;
+  --duration-base:  0.4s;
+  --duration-slow:  0.8s;
+
+  /* Palette Léa Millet */
+  --teal:        #016d77;
+  --teal-deep:   #014a52;
+  --sage:        #82c5bd;
+  --sage-dark:   #5fa89f;
+  --mint:        #d5f1d1;
+  --moss:        #a8c893;
+  --cream:       #f4fed7;
+  --lime:        #e2fdb5;
+  --sky:         #a7dae5;
+  --ink:         #4c6069;
+}
+
+/* ═══════════════════════════════════════════════════
+   BASE
+═══════════════════════════════════════════════════ */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+*, *::before, *::after {
+  user-select: none;
+  -webkit-user-select: none;
+}
+input, textarea, [contenteditable] {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  color: #5a6b6a;
+  opacity: 0;
+  animation: page-in 0.8s var(--expo-out) forwards;
+}
+
+@keyframes page-in {
+  to { opacity: 1; }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: #eef7ec; }
+::-webkit-scrollbar-thumb { background: #82c5bd; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #016d77; }
+
+/* ═══════════════════════════════════════════════════
+   SCROLL PROGRESS BAR
+═══════════════════════════════════════════════════ */
+#scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, #016d77 0%, #a8c893 100%);
+  z-index: 200;
+  transition: width 0.08s linear;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════
+   SECTION HEADINGS — clip-path wipe + underline
+═══════════════════════════════════════════════════ */
+.section-heading {
+  font-family: 'Candal', sans-serif;
+  font-size: 1.15rem;
+  letter-spacing: 8px;
+  color: #3f5451;
+  display: block;
+  width: fit-content;
+  margin: 0 auto 2.5rem;
+  position: relative;
+}
+
+.section-heading::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 3px;
+  background: linear-gradient(90deg, #016d77, #a8c893);
+  border-radius: 2px;
+  margin: 0.6rem auto 0;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.5s var(--spring) 0.5s;
+}
+
+.section-heading.show::after {
+  transform: scaleX(1);
+}
+
+/* Variante claire — sur fonds colorés (Présentation, Tarifs, Contact) */
+.section-heading.heading-light {
+  color: rgba(255, 255, 255, 0.94);
+}
+.section-heading.heading-light::after {
+  background: linear-gradient(90deg, #ffffff, rgba(255, 255, 255, 0.45));
+}
+
+/* scroll-zoom override for headings: clip-path LEFT→RIGHT wipe */
+.section-heading.scroll-zoom {
+  opacity: 1;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1s var(--swipe);
+}
+.section-heading.scroll-zoom.show {
+  clip-path: inset(0 0% 0 0);
+}
+
+/* ═══════════════════════════════════════════════════
+   SCROLL ANIMATIONS — .scroll-zoom (non-heading)
+═══════════════════════════════════════════════════ */
+.scroll-zoom {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity   0.7s var(--expo-out),
+    transform 0.7s var(--expo-out);
+}
+.scroll-zoom.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════
+   SCROLL ANIMATIONS — .slide-up  (spring bounce)
+═══════════════════════════════════════════════════ */
+.slide-up {
+  opacity: 0;
+  transform: translateY(60px);
+  transition:
+    opacity   0.85s var(--expo-out),
+    transform 0.85s var(--spring);
+}
+.slide-up.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════
+   STAGGER
+═══════════════════════════════════════════════════ */
+.stagger > *:nth-child(1) { transition-delay:   0ms; }
+.stagger > *:nth-child(2) { transition-delay: 130ms; }
+.stagger > *:nth-child(3) { transition-delay: 260ms; }
+.stagger > *:nth-child(4) { transition-delay: 130ms; }
+.stagger > *:nth-child(5) { transition-delay: 260ms; }
+
+/* ═══════════════════════════════════════════════════
+   3D TILT HELPER
+═══════════════════════════════════════════════════ */
+.tilt-ready {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* ═══════════════════════════════════════════════════
+   CARDS — hover transitions (opacity INCLUSE)
+═══════════════════════════════════════════════════ */
+.practice-card {
+  transition:
+    opacity     0.85s var(--expo-out),
+    transform   0.3s  var(--spring),
+    box-shadow  0.3s  ease,
+    border-color 0.3s ease;
+}
+.practice-card:hover {
+  box-shadow: 0 24px 48px rgba(1, 109, 119, 0.18);
+  border-color: #82c5bd;
+}
+
+.tarif-card {
+  transition:
+    opacity    0.85s var(--expo-out),
+    transform  0.3s  var(--spring),
+    box-shadow 0.3s  ease;
+}
+
+/* ═══════════════════════════════════════════════════
+   BUTTONS — .btn-primary + magnetic base
+═══════════════════════════════════════════════════ */
+.btn-primary {
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  border-radius: 30px;
+  font-family: 'Candal', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    transform   0.12s ease,
+    box-shadow  0.25s ease;
+}
+.btn-primary:hover {
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+}
+
+/* ═══════════════════════════════════════════════════
+   RIPPLE EFFECT
+═══════════════════════════════════════════════════ */
+.btn-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  pointer-events: none;
+  transform: scale(0);
+  animation: btn-ripple 0.7s var(--expo-out) forwards;
+}
+@keyframes btn-ripple {
+  from { transform: scale(0);   opacity: 1; }
+  to   { transform: scale(3.5); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════
+   HERO — aurora blobs
+═══════════════════════════════════════════════════ */
+@keyframes hero-aurora-1 {
+  0%   { transform: translate(0px, 0px)    scale(1);    }
+  33%  { transform: translate(40px, -30px) scale(1.08); }
+  66%  { transform: translate(-20px, 20px) scale(0.95); }
+  100% { transform: translate(0px, 0px)    scale(1);    }
+}
+@keyframes hero-aurora-2 {
+  0%   { transform: translate(0px, 0px)    scale(1);    }
+  40%  { transform: translate(-50px, 30px) scale(1.1);  }
+  70%  { transform: translate(25px, -15px) scale(0.92); }
+  100% { transform: translate(0px, 0px)    scale(1);    }
+}
+@keyframes hero-aurora-3 {
+  0%   { transform: translate(0px, 0px)     scale(1);    }
+  30%  { transform: translate(20px, 40px)   scale(1.06); }
+  60%  { transform: translate(-35px, -20px) scale(0.97); }
+  100% { transform: translate(0px, 0px)     scale(1);    }
+}
+
+/* ═══════════════════════════════════════════════════
+   HERO — split-text letter entrance
+═══════════════════════════════════════════════════ */
+@keyframes hero-letter-in {
+  from { opacity: 0; transform: translateY(60px) rotate(8deg); }
+  to   { opacity: 1; transform: translateY(0)    rotate(0deg); }
+}
+.hero-letter {
+  display: inline-block;
+  opacity: 0;
+  animation: hero-letter-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.hero-letter-space { display: inline-block; width: 0.35em; }
+
+/* ═══════════════════════════════════════════════════
+   NAVBAR helpers
+═══════════════════════════════════════════════════ */
+@keyframes nav-item-in {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0);     }
+}
+.nav-item-anim {
+  opacity: 0;
+  animation: nav-item-in 0.3s ease forwards;
+}
+
+/* ═══════════════════════════════════════════════════
+   DIALOG — backdrop + spring entrance
+═══════════════════════════════════════════════════ */
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+}
+dialog {
+  border: none;
+  border-radius: 20px;
+  padding: 0;
+  max-width: 500px;
+  width: 92%;
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.25);
+  animation: dialog-in 0.3s var(--spring) forwards;
+}
+@keyframes dialog-in {
+  from { opacity: 0; transform: scale(0.88) translateY(24px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);    }
+}
+
+/* ═══════════════════════════════════════════════════
+   LAYOUT VERTICAL — scroll naturel de la page
+═══════════════════════════════════════════════════ */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 62px;
+  height: auto;
+  overflow-y: auto;
+}
+body { height: auto; overflow: visible; }
+
+#h-scroll > section {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: calc(62px + 2.5rem);
+  padding-bottom: 8rem;
+}
+
+/* Pratique : contenu long, démarre en haut */
+#pratique {
+  justify-content: flex-start;
+  padding-top: 0;
+  padding-bottom: 8rem;
+}
+#pratique .prat-wrap {
+  padding-top: calc(62px + 1.5rem);
+}
+
+/* ── Spotlight par section (injecté via JS) ─────── */
+.sect-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background:
+    radial-gradient(200px  circle at var(--gx, 50%) var(--gy, 50%),
+      var(--gc-inner, rgba(255,255,255,0.22)),
+      transparent 100%),
+    radial-gradient(500px circle at var(--gx, 50%) var(--gy, 50%),
+      var(--gc, rgba(255,255,255,0.10)),
+      transparent 65%);
+}
+
+/* ── Curseur lumineux global (injecté via JS) ────── */
+#cursor-glow {
+  position: fixed;
+  top: 0; left: 0;
+  width: 480px; height: 480px;
+  margin: -240px 0 0 -240px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9000;
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    circle at center,
+    rgba(167,218,229,0.55) 0%,
+    rgba(130,197,189,0.26) 38%,
+    transparent 68%
+  );
+  will-change: translate;
+}
+
+/* ═══════════════════════════════════════════════════
+   MOBILE RESPONSIVE
+═══════════════════════════════════════════════════ */
+
+/* Désactive les effets souris sur appareils tactiles */
+@media (hover: none), (pointer: coarse) {
+  #cursor-glow { display: none !important; }
+  .sect-glow   { display: none !important; }
+}
+
+/* Padding réduit sur petits écrans */
+@media (max-width: 639px) {
+  #h-scroll > section {
+    padding-top: calc(62px + 1.2rem);
+    padding-bottom: 5rem;
+  }
+  #pratique {
+    padding-bottom: 5rem;
+  }
+  #pratique .prat-wrap {
+    padding-top: calc(62px + 0.8rem);
+  }
+}

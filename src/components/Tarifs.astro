@@ -1,0 +1,324 @@
+---
+const tarifs = [
+  { id:'tarif1', title:'Séance enfant', price:'45€', priceValue:45, tag:'45 min', popular:false,
+    detail:{ header:'SÉANCE INDIVIDUELLE ENFANT', price:'45 min : 45€',
+      body:`<span class="text-sm">Séance individuelle de 45 minutes, adaptée à l'âge, aux besoins et aux capacités de l'enfant.</span>` }},
+  { id:'tarif2', title:'Guidance parentale', price:'60€', priceValue:60, tag:'1 heure', popular:false,
+    detail:{ header:'GUIDANCE PARENTALE', price:'1 h : 60€',
+      body:`<span class="text-sm">Séance d'une heure destinée aux parents&nbsp;: comprendre les troubles de l'enfant et adapter le quotidien à la maison.</span>` }},
+  { id:'tarif3', title:'Bilan · suspicion de TSA', price:'350€', priceValue:350, tag:'Forfait bilan', popular:false,
+    detail:{ header:'BILAN — SUSPICION DE TSA', price:'350€',
+      body:`<span class="text-lg block mb-2">Ce bilan comprend :</span><span class="text-sm leading-8 block">— PEP-3<br/>— CARS-T<br/>— Vineland ou Profil de Dunn<br/>— Entretien d'anamnèse et restitution</span>` }},
+  { id:'tarif4', title:'Bilan cognitif', price:'380€', priceValue:380, tag:'à partir de · sur devis', popular:false,
+    detail:{ header:'BILAN COGNITIF / NEUROPSYCHOLOGIQUE', price:'à partir de 380€',
+      body:`<span class="text-sm">Bilan établi sur devis, à partir de 380€, selon les outils nécessaires (WISC-V, WPPSI-IV, BRIEF, Conners, Brown…).</span>` }},
+  { id:'tarif5', title:"Programme d'intervention précoce", price:'900€', priceValue:900, tag:'Denver ESDM · 3 mois', popular:true,
+    detail:{ header:"PROGRAMME D'INTERVENTION PRÉCOCE — DENVER ESDM (3 MOIS)", price:'900€ · payable en 3×',
+      body:`<span class="text-sm leading-8 block">— Évaluation Denver et définition des objectifs&nbsp;: 1 séance enfant (45 min) + 1 entretien famille (1 h)<br/>— 1 séance individuelle hebdomadaire pour l'enfant (45 min)<br/>— 1 séance de guidance parentale (1 h), 2 fois par mois</span><span class="text-sm block mt-3"><strong>900€</strong> payables en 3 fois, soit 300€ sur 3 mensualités.</span>` }},
+];
+
+const extras = [
+  'Sensibilisation à l\'autisme (centre de loisirs, école, crèche, nounou) — sur devis selon le projet',
+  'Déplacement aux ESS — frais à définir + tarification 1 heure',
+  'Groupes d\'habiletés sociales selon les enfants accueillis — sur devis',
+];
+---
+
+<!-- ===================================================
+     SECTION TARIFS — bg sage profond · dialogs natifs
+=================================================== -->
+<section id="tarification" class="relative overflow-hidden pb-32 pt-20" style="background: linear-gradient(160deg, #5fa89f 0%, #4f9c93 100%);">
+
+  <!-- Orbs décoratifs -->
+  <div class="tarif-orb pointer-events-none absolute" aria-hidden="true"
+    style="width:420px; height:420px; top:-80px; right:-100px; border-radius:50%; background: radial-gradient(circle at center, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 70%); filter: blur(72px); animation: tarif-orb 12s ease-in-out infinite alternate;"></div>
+  <div class="tarif-orb pointer-events-none absolute" aria-hidden="true"
+    style="width:320px; height:320px; bottom:60px; left:-80px; border-radius:50%; background: radial-gradient(circle at center, rgba(167,218,229,0.10) 0%, rgba(167,218,229,0) 70%); filter: blur(60px); animation: tarif-orb 9s ease-in-out infinite alternate-reverse;"></div>
+
+  <div class="relative z-10 mx-auto max-w-5xl px-5 sm:px-10 md:px-20">
+
+    <h2 class="scroll-zoom section-heading heading-light">MES TARIFS</h2>
+
+    <!-- Sous-texte paiements -->
+    <p class="slide-up mb-14 text-center text-sm leading-7 text-white/85 font-lato">
+      Paiements acceptés&nbsp;: <strong>chèque, espèces et virement bancaire</strong> (via Paylib).<br />
+      Les bilans peuvent être réglés en 1, 2 ou 3&nbsp;fois.
+    </p>
+
+    <!-- ── Grid de cards ── -->
+    <div class="tarif-grid stagger">
+      {tarifs.map(t => (
+        <div
+          class:list={[ 'tarif-card slide-up relative flex flex-col items-center rounded-3xl p-7 text-center', { 'tarif-card-popular': t.popular } ]}
+          style={`
+            background: linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.08) 100%);
+            border: 1px solid rgba(255,255,255,0.28);
+            box-shadow: ${t.popular ? '0 0 0 2px rgba(167,218,229,0.5), 0 20px 40px rgba(1,74,82,0.25)' : '0 8px 32px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.25)'};
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            transform: ${t.popular ? 'scale(1.02)' : 'scale(1)'};
+          `}
+        >
+          {t.popular && (
+            <div class="tarif-popular-badge" aria-label="Le plus complet">Le plus complet</div>
+          )}
+
+          <div class="tarif-price-pill mb-3 inline-flex items-center rounded-full px-5 py-2 font-candal text-xl text-white shadow-md"
+            style="background: linear-gradient(135deg, #016d77 0%, #0f8b8d 100%);">
+            <span class="tarif-price-value" data-price={t.priceValue}>0</span><span class="ml-[2px]">€</span>
+          </div>
+
+          <span class="mb-3 block text-[10px] uppercase tracking-widest text-white/75 font-lato">{t.tag}</span>
+
+          <h3 class="mb-6 font-candal text-[0.9rem] leading-snug text-white">{t.title}</h3>
+
+          <button
+            class="btn-primary tarif-details-btn mt-auto min-h-[44px] rounded-full px-6 py-2 text-sm font-candal text-white backdrop-blur-sm transition-all"
+            style="background: rgba(255,255,255,0.22); border: 1px solid rgba(255,255,255,0.35);"
+            data-open-dialog={`dialog-${t.id}`}
+            aria-haspopup="dialog"
+          >Détails</button>
+        </div>
+      ))}
+    </div>
+
+    <!-- ── Prestations complémentaires ── -->
+    <div class="slide-up tarif-extras">
+      <p class="tarif-extras-title">Également possible, sur devis&nbsp;:</p>
+      <ul>
+        {extras.map(e => (
+          <li><span class="tarif-extra-dot" aria-hidden="true">✦</span>{e}</li>
+        ))}
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Wave bas → lieux (#f7fce9) -->
+  <div class="wave-seal pointer-events-none absolute bottom-0 left-0 w-full" style="line-height:0; margin-bottom:-1px;" aria-hidden="true">
+    <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width:100%; height:70px; display:block;">
+      <path fill="rgba(247,252,233,0.5)" d="M0,35 C360,70 1080,0 1440,35 L1440,70 L0,70 Z"/>
+      <path fill="#f7fce9" d="M0,45 C420,5 1020,65 1440,45 L1440,70 L0,70 Z"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ===================================================
+     DIALOGS NATIFS
+=================================================== -->
+{tarifs.map(t => (
+  <dialog id={`dialog-${t.id}`} class="tarif-dialog" aria-labelledby={`dialog-title-${t.id}`}>
+    <div class="tarif-dialog-inner">
+      <div class="tarif-dialog-header rounded-t-[24px] px-8 py-7 text-center" style="background-color: #5fa89f;">
+        <div class="tarif-dialog-dots mb-4" aria-hidden="true">
+          <span style="color: #016d77;">●</span>
+          <span style="color: #a7dae5;">●</span>
+          <span style="color: #ffffff;">●</span>
+          <span style="color: #a8c893; opacity:0.7;">●</span>
+          <span style="color: #016d77; opacity:0.55;">●</span>
+        </div>
+        <h3 id={`dialog-title-${t.id}`} class="font-candal text-sm leading-relaxed tracking-wider text-white">{t.detail.header}</h3>
+        <div class="mt-4 inline-block rounded-full px-6 py-2 font-candal text-white text-base shadow-lg" style="background: linear-gradient(135deg, #016d77 0%, #0f8b8d 100%);">
+          {t.detail.price}
+        </div>
+      </div>
+      <div class="tarif-dialog-body bg-white px-8 py-7 text-center text-gray-700">
+        <p set:html={t.detail.body}></p>
+      </div>
+      <div class="tarif-dialog-footer rounded-b-[24px] border-t border-gray-100 bg-white px-6 py-5 text-center">
+        <button class="tarif-close-btn inline-flex items-center gap-2 rounded-full px-7 py-2.5 font-candal text-sm text-white transition-all"
+          style="background: linear-gradient(135deg, #5fa89f 0%, #4f9c93 100%); box-shadow: 0 4px 14px rgba(95,168,159,0.35);"
+          data-close-dialog aria-label="Fermer">
+          <span class="tarif-close-icon" aria-hidden="true">✕</span>
+          Fermer
+        </button>
+      </div>
+    </div>
+  </dialog>
+))}
+
+<!-- ===================================================
+     SCRIPT
+=================================================== -->
+<script>
+  /* ── 1. OPEN / CLOSE DIALOGS ── */
+  document.querySelectorAll<HTMLButtonElement>('[data-open-dialog]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-open-dialog');
+      if (!id) return;
+      const dialog = document.getElementById(id) as HTMLDialogElement | null;
+      dialog?.showModal();
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('[data-close-dialog]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      (btn.closest('dialog') as HTMLDialogElement | null)?.close();
+    });
+  });
+
+  /* ── 2. FERMETURE AU CLIC BACKDROP ── */
+  document.querySelectorAll('dialog.tarif-dialog').forEach(el => {
+    const dialog = el as HTMLDialogElement;
+    dialog.addEventListener('click', (e: MouseEvent) => {
+      if (e.target === dialog) dialog.close();
+    });
+  });
+
+  /* ── 3. ANIMATED PRICE COUNTER ── */
+  const DURATION = 800;
+  function easeOutCubic(t: number): number { return 1 - Math.pow(1 - t, 3); }
+
+  function animateCounter(el: HTMLElement, target: number): void {
+    const start = performance.now();
+    function frame(now: number): void {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / DURATION, 1);
+      const value = Math.round(easeOutCubic(progress) * target);
+      el.textContent = String(value);
+      if (progress < 1) requestAnimationFrame(frame);
+      else el.textContent = String(target);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  const priceEls = document.querySelectorAll<HTMLElement>('.tarif-price-value');
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target as HTMLElement;
+          const target = parseInt(el.getAttribute('data-price') ?? '0', 10);
+          animateCounter(el, target);
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.3 });
+    priceEls.forEach(el => observer.observe(el));
+  } else {
+    priceEls.forEach(el => { el.textContent = el.getAttribute('data-price') ?? '0'; });
+  }
+</script>
+
+<!-- ===================================================
+     STYLES
+=================================================== -->
+<style is:global>
+
+  /* ── TARIF GRID — centrage dynamique pour 5 cards ── */
+  .tarif-grid { display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
+
+  @media (min-width: 640px) {
+    .tarif-grid { grid-template-columns: repeat(4, 1fr); }
+    .tarif-grid > * { grid-column: span 2; }
+    .tarif-grid > *:nth-child(5) { grid-column: 2 / span 2; }
+  }
+  @media (min-width: 1024px) {
+    .tarif-grid { grid-template-columns: repeat(6, 1fr); }
+    .tarif-grid > * { grid-column: span 2; }
+    .tarif-grid > *:nth-child(4) { grid-column: 2 / span 2; }
+    .tarif-grid > *:nth-child(5) { grid-column: 4 / span 2; }
+  }
+
+  @keyframes tarif-orb {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(20px, 30px) scale(1.08); }
+    100% { transform: translate(-10px, 15px) scale(0.95); }
+  }
+  @keyframes dialog-spring {
+    0%   { opacity: 0; transform: scale(0.85) translateY(24px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .tarif-card {
+    transition:
+      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.85s var(--expo-out, cubic-bezier(0.16, 1, 0.3, 1));
+  }
+  .tarif-card:hover {
+    transform: translateY(-10px) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+  }
+  .tarif-card-popular:hover { transform: scale(1.02) translateY(-10px) !important; }
+
+  .tarif-popular-badge {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(135deg, #016d77 0%, #0f8b8d 100%);
+    color: #fff; font-family: 'Candal', sans-serif; font-size: 10px;
+    letter-spacing: 2px; text-transform: uppercase; padding: 5px 14px;
+    border-radius: 20px; box-shadow: 0 4px 16px rgba(1, 74, 82, 0.40);
+    white-space: nowrap; pointer-events: none; z-index: 10;
+  }
+
+  .tarif-details-btn:hover {
+    background: rgba(255, 255, 255, 0.38) !important;
+    border-color: rgba(255, 255, 255, 0.55) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  /* ── Prestations complémentaires ── */
+  .tarif-extras {
+    max-width: 720px;
+    margin: 3.5rem auto 0;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 20px;
+    padding: 1.6rem 1.8rem;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .tarif-extras-title {
+    font-family: 'Candal', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    color: #ffffff;
+    margin-bottom: 0.9rem;
+  }
+  .tarif-extras ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .tarif-extras li {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.86rem; line-height: 1.55;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  .tarif-extra-dot { color: #a7dae5; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── DIALOG ── */
+  .tarif-dialog {
+    padding: 0; border: none; border-radius: 24px; overflow: hidden;
+    max-width: min(520px, 92vw); width: 100%;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.30); background: transparent;
+  }
+  .tarif-dialog[open] { animation: dialog-spring 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+  .tarif-dialog::backdrop {
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    background: rgba(0, 0, 0, 0.50);
+  }
+  .tarif-dialog-inner { border-radius: 24px; overflow: hidden; display: flex; flex-direction: column; }
+
+  .tarif-dialog-dots {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; font-size: 14px; letter-spacing: 2px;
+  }
+
+  .tarif-close-btn { transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease; }
+  .tarif-close-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(95, 168, 159, 0.45) !important; }
+  .tarif-close-icon { display: inline-block; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .tarif-close-btn:hover .tarif-close-icon { transform: rotate(90deg); }
+
+  @media (max-width: 639px) {
+    .tarif-card-popular { transform: scale(1) !important; margin-top: 1rem; }
+    .tarif-dialog { max-width: 96vw; }
+    .tarif-dialog-header { padding: 1.5rem 1.25rem; }
+    .tarif-dialog-body   { padding: 1.25rem; }
+    .tarif-dialog-footer { padding: 1rem; }
+  }
+
+  .tarif-dialog-body .text-lg { color: #016d77; font-weight: 600; }
+  .tarif-dialog-body .text-sm { color: #555; line-height: 1.8; }
+  .tarif-dialog-body strong { color: #016d77; }
+
+</style>

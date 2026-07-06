@@ -1,0 +1,371 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  canonical?: string;
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = "Léa Millet — Psychologue Clinicienne D.E à Miramas | Autisme & Neurodéveloppement",
+  description = "Léa Millet, psychologue clinicienne D.E à Miramas (13140), spécialisée dans l'autisme et les troubles neurodéveloppementaux. Bilans psychologiques, intervention précoce (ESDM), guidance parentale et groupes d'habiletés sociales pour enfants et adolescents.",
+  keywords = "Léa Millet, psychologue Miramas, psychologue 13140, psychologue clinicienne, autisme, TSA, troubles neurodéveloppementaux, bilan psychologique, intervention précoce, ESDM, Denver, guidance parentale, habiletés sociales, enfants, adolescents",
+  canonical = "https://milletlea-psychologue.com/",
+  ogImage = "https://milletlea-psychologue.com/pictures/logo.png",
+  noindex = false,
+} = Astro.props;
+
+const siteName = "Léa Millet — Psychologue clinicienne à Miramas";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["MedicalBusiness", "LocalBusiness"],
+      "@id": "https://milletlea-psychologue.com/#cabinet",
+      "name": "Léa Millet — Psychologue clinicienne D.E",
+      "description": "Cabinet de psychologie clinicienne à Miramas (13140), spécialisé dans l'autisme et les troubles neurodéveloppementaux. Bilans psychologiques, intervention précoce, guidance parentale, groupes d'habiletés sociales pour enfants et adolescents.",
+      "url": "https://milletlea-psychologue.com/",
+      "telephone": "+33616037537",
+      "email": "lea.millet.psy13@gmail.com",
+      "priceRange": "40€ – 900€",
+      "currenciesAccepted": "EUR",
+      "paymentAccepted": "Espèces, Virement bancaire, Chèque, Paylib",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Miramas",
+        "postalCode": "13140",
+        "addressRegion": "Provence-Alpes-Côte d'Azur",
+        "addressCountry": "FR"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Wednesday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        }
+      ],
+      "areaServed": [
+        { "@type": "City", "name": "Miramas" },
+        { "@type": "City", "name": "Istres" },
+        { "@type": "City", "name": "Salon-de-Provence" },
+        { "@type": "City", "name": "Martigues" }
+      ],
+      "sameAs": [
+        "https://www.doctolib.fr/psychologue/miramas/lea-millet"
+      ],
+      "medicalSpecialty": "MentalHealth",
+      "employee": { "@id": "https://milletlea-psychologue.com/#lea" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://milletlea-psychologue.com/#lea",
+      "name": "Léa Millet",
+      "jobTitle": "Psychologue clinicienne D.E",
+      "honorificPrefix": "Mme",
+      "url": "https://milletlea-psychologue.com/",
+      "telephone": "+33616037537",
+      "email": "lea.millet.psy13@gmail.com",
+      "worksFor": { "@id": "https://milletlea-psychologue.com/#cabinet" },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Miramas",
+        "postalCode": "13140",
+        "addressCountry": "FR"
+      },
+      "sameAs": [
+        "https://www.doctolib.fr/psychologue/miramas/lea-millet"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://milletlea-psychologue.com/#website",
+      "url": "https://milletlea-psychologue.com/",
+      "name": siteName,
+      "inLanguage": "fr-FR",
+      "publisher": { "@id": "https://milletlea-psychologue.com/#lea" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://milletlea-psychologue.com/#webpage",
+      "url": canonical,
+      "name": title,
+      "isPartOf": { "@id": "https://milletlea-psychologue.com/#website" },
+      "about": { "@id": "https://milletlea-psychologue.com/#cabinet" },
+      "inLanguage": "fr-FR"
+    }
+  ]
+};
+---
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- SEO de base -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content="Léa Millet" />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow, max-snippet:-1, max-image-preview:large"} />
+
+    <!-- Géolocalisation -->
+    <meta name="geo.region" content="FR-13" />
+    <meta name="geo.placename" content="Miramas" />
+    <meta name="geo.position" content="43.5833;5.0" />
+    <meta name="ICBM" content="43.5833, 5.0" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content="fr_FR" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/pictures/logo.png" />
+    <link rel="apple-touch-icon" href="/pictures/logo.png" />
+
+    <!-- Sitemap hint -->
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Candal&family=Montserrat:wght@400;600&family=Mirza:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Schema.org JSON-LD -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+
+    <!-- Scroll progress bar -->
+    <div id="scroll-progress"></div>
+
+    <div id="h-scroll">
+      <slot />
+    </div>
+
+    <script>
+      const bar = document.getElementById('scroll-progress') as HTMLElement | null;
+
+      /* ════════════════════════════════════════
+         1. PROGRESS (scroll vertical)
+      ════════════════════════════════════════ */
+      window.addEventListener('scroll', () => {
+        if (!bar) return;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = max > 0 ? `${window.scrollY / max * 100}%` : '0%';
+      }, { passive: true });
+
+      /* ════════════════════════════════════════
+         2. SCROLL REVEAL
+      ════════════════════════════════════════ */
+      const revealObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+            revealObs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, root: null });
+
+      document.querySelectorAll('.slide-up, .scroll-zoom').forEach(el => revealObs.observe(el));
+
+      /* ════════════════════════════════════════
+         3. 3D TILT on cards
+      ════════════════════════════════════════ */
+      const TILT_MAX         = 14;
+      const TILT_PERSPECTIVE = 900;
+
+      function applyTilt(card: HTMLElement, e: MouseEvent) {
+        const rect = card.getBoundingClientRect();
+        const cx   = rect.left + rect.width  / 2;
+        const cy   = rect.top  + rect.height / 2;
+        const dx   = (e.clientX - cx) / (rect.width  / 2);
+        const dy   = (e.clientY - cy) / (rect.height / 2);
+        const rotX = -dy * TILT_MAX;
+        const rotY =  dx * TILT_MAX;
+        card.style.transition = 'transform 0.12s linear';
+        card.style.transform  =
+          `perspective(${TILT_PERSPECTIVE}px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.02)`;
+      }
+
+      function resetTilt(card: HTMLElement) {
+        card.style.transition = 'transform 0.55s cubic-bezier(0.34,1.56,0.64,1)';
+        card.style.transform  =
+          `perspective(${TILT_PERSPECTIVE}px) rotateX(0deg) rotateY(0deg) scale(1)`;
+      }
+
+      const tiltTargets = document.querySelectorAll<HTMLElement>('.lieux-card');
+      tiltTargets.forEach(card => {
+        card.addEventListener('mousemove',  e => applyTilt(card, e));
+        card.addEventListener('mouseleave', () => resetTilt(card));
+      });
+
+      /* ════════════════════════════════════════
+         4. MAGNETIC BUTTONS
+      ════════════════════════════════════════ */
+      const MAG_STRENGTH = 0.22;
+
+      document.querySelectorAll<HTMLElement>('.btn-primary').forEach(btn => {
+        btn.addEventListener('mousemove', e => {
+          const rect = btn.getBoundingClientRect();
+          const cx   = rect.left + rect.width  / 2;
+          const cy   = rect.top  + rect.height / 2;
+          const dx   = (e.clientX - cx) * MAG_STRENGTH;
+          const dy   = (e.clientY - cy) * MAG_STRENGTH;
+          btn.style.transition = 'transform 0.12s ease';
+          btn.style.transform  = `translate(${dx}px, ${dy}px)`;
+        });
+
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transition = 'transform 0.55s cubic-bezier(0.34,1.56,0.64,1)';
+          btn.style.transform  = 'translate(0, 0)';
+        });
+      });
+
+      /* ════════════════════════════════════════
+         5. RIPPLE ON CLICK
+      ════════════════════════════════════════ */
+      document.querySelectorAll<HTMLElement>('.btn-primary').forEach(btn => {
+        btn.addEventListener('click', (e: MouseEvent) => {
+          const rect   = btn.getBoundingClientRect();
+          const size   = Math.max(rect.width, rect.height) * 2;
+          const x      = e.clientX - rect.left - size / 2;
+          const y      = e.clientY - rect.top  - size / 2;
+          const ripple = document.createElement('span');
+          ripple.className     = 'btn-ripple';
+          ripple.style.cssText = `width:${size}px;height:${size}px;left:${x}px;top:${y}px;`;
+          btn.appendChild(ripple);
+          setTimeout(() => ripple.remove(), 800);
+        });
+      });
+
+      /* ════════════════════════════════════════
+         6. MOUSE BACKGROUND EFFECTS — spotlight glow
+      ════════════════════════════════════════ */
+      const glowColors: Record<string, { outer: string; inner: string }> = {
+        accueil:      { inner: 'rgba(167,218,229,0.30)', outer: 'rgba(1,109,119,0.18)' },
+        presentation: { inner: 'rgba(255,255,255,0.30)', outer: 'rgba(76,96,105,0.16)' },
+        pratique:     { inner: 'rgba(130,197,189,0.28)', outer: 'rgba(168,200,147,0.18)' },
+        tarification: { inner: 'rgba(255,255,255,0.30)', outer: 'rgba(95,168,159,0.18)' },
+        lieux:        { inner: 'rgba(168,200,147,0.26)', outer: 'rgba(130,197,189,0.16)' },
+        contact:      { inner: 'rgba(167,218,229,0.30)', outer: 'rgba(1,109,119,0.18)' },
+      };
+
+      const glowSections = Array.from(
+        document.querySelectorAll<HTMLElement>('#h-scroll > section, section[id]')
+      ).filter((el, i, arr) => arr.indexOf(el) === i);
+
+      glowSections.forEach(section => {
+        if (getComputedStyle(section).position === 'static') {
+          section.style.position = 'relative';
+        }
+
+        const glow = document.createElement('div');
+        glow.className = 'sect-glow';
+        glow.setAttribute('aria-hidden', 'true');
+        const colors = glowColors[section.id] ?? { inner: 'rgba(255,255,255,0.20)', outer: 'rgba(255,255,255,0.10)' };
+        glow.style.setProperty('--gc-inner', colors.inner);
+        glow.style.setProperty('--gc',       colors.outer);
+        section.insertBefore(glow, section.firstChild);
+
+        section.addEventListener('mousemove', (e: MouseEvent) => {
+          const r = section.getBoundingClientRect();
+          glow.style.setProperty('--gx', `${e.clientX - r.left}px`);
+          glow.style.setProperty('--gy', `${e.clientY - r.top}px`);
+          glow.style.opacity = '1';
+        }, { passive: true });
+
+        section.addEventListener('mouseleave', () => {
+          glow.style.opacity = '0';
+        }, { passive: true });
+      });
+
+      /* Pas d'effets souris sur appareils tactiles */
+      const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+      /* ── Curseur lumineux global (desktop uniquement) ── */
+      if (!isTouch) {
+        const cursorGlowEl = document.createElement('div');
+        cursorGlowEl.id = 'cursor-glow';
+        document.body.appendChild(cursorGlowEl);
+
+        let cgx = -999, cgy = -999, clx = -999, cly = -999;
+        let cursorOverContent = false;
+
+        document.addEventListener('mousemove', (e: MouseEvent) => {
+          cgx = e.clientX; cgy = e.clientY;
+          const hit = document.elementFromPoint(e.clientX, e.clientY);
+          cursorOverContent = !!hit && !!(
+            hit.closest('img, p, h1, h2, h3, h4, h5, h6, li, blockquote, figure, ' +
+              '.prat-item, .prat-text, .contact-card, .tarif-card, ' +
+              '.lieux-card, .pres-card')
+          );
+        }, { passive: true });
+
+        ;(function cursorTick() {
+          clx += (cgx - clx) * 0.13;
+          cly += (cgy - cly) * 0.13;
+          cursorGlowEl.style.translate = `${clx.toFixed(1)}px ${cly.toFixed(1)}px`;
+          const targetOp  = cursorOverContent ? 0.18 : 1.0;
+          const currentOp = parseFloat(cursorGlowEl.style.opacity || '1');
+          cursorGlowEl.style.opacity = (currentOp + (targetOp - currentOp) * 0.09).toFixed(3);
+          requestAnimationFrame(cursorTick);
+        })();
+      }
+
+      /* ── Hero aurora parallax (desktop uniquement) ── */
+      type BlobCfg = { el: HTMLElement; str: number; sp: number };
+      const heroEl = document.getElementById('accueil');
+      const blobs: BlobCfg[] = ([
+        { el: document.querySelector<HTMLElement>('.hero-aurora-1'), str:  95, sp: 0.042 },
+        { el: document.querySelector<HTMLElement>('.hero-aurora-2'), str: -75, sp: 0.030 },
+        { el: document.querySelector<HTMLElement>('.hero-aurora-3'), str:  55, sp: 0.058 },
+      ] as Array<{ el: HTMLElement | null; str: number; sp: number }>)
+        .filter((b): b is BlobCfg => !!b.el);
+
+      if (!isTouch && heroEl && blobs.length) {
+        let hx = 0, hy = 0;
+        const lx = blobs.map(() => 0);
+        const ly = blobs.map(() => 0);
+
+        heroEl.addEventListener('mousemove', (e: MouseEvent) => {
+          hx = (e.clientX / window.innerWidth  - 0.5) * 2;
+          hy = (e.clientY / window.innerHeight - 0.5) * 2;
+        }, { passive: true });
+
+        heroEl.addEventListener('mouseleave', () => { hx = 0; hy = 0; }, { passive: true });
+
+        ;(function blobTick() {
+          blobs.forEach((b, i) => {
+            lx[i] += (hx * b.str       - lx[i]) * b.sp;
+            ly[i] += (hy * b.str * 0.7 - ly[i]) * b.sp;
+            b.el.style.translate = `${lx[i].toFixed(1)}px ${ly[i].toFixed(1)}px`;
+          });
+          requestAnimationFrame(blobTick);
+        })();
+      }
+    </script>
+
+  </body>
+</html>

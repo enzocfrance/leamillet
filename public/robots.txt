@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /mentions/
+
+Sitemap: https://milletlea-psychologue.com/sitemap.xml

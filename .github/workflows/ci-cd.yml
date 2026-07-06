@@ -1,0 +1,68 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Annule les runs précédents encore en cours sur la même ref
+concurrency:
+  group: ci-cd-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # CI — Build du site Astro statique
+  # ---------------------------------------------------------------------------
+  build:
+    name: Build · Astro
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      # Conserve le dossier dist/ pour le job de déploiement
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
+
+  # ---------------------------------------------------------------------------
+  # CD — Déploiement SFTP sur OVH, uniquement si la CI passe et sur push main
+  # ---------------------------------------------------------------------------
+  deploy:
+    name: Deploy · OVH (SFTP)
+    needs: [build]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Deploy to OVH via SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.5
+        with:
+          server: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          password: ${{ secrets.SFTP_PASSWORD }}
+          port: ${{ secrets.SFTP_PORT }}
+          local_path: './dist/*'
+          remote_path: ${{ secrets.SFTP_REMOTE_PATH }}
+          sftp_only: true
+          delete_remote_files: false

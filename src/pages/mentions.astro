@@ -1,0 +1,243 @@
+---
+import Base   from '../layouts/Base.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+const sections = [
+  {
+    color: '#016d77',
+    title: 'Créateur du site',
+    body: 'Le site web <strong>milletlea-psychologue.com</strong> est créé et maintenu par Mr&nbsp;Chamanier Enzo.',
+  },
+  {
+    color: '#5fa89f',
+    title: 'Hébergement',
+    body: "Le site est hébergé par la société <strong>OVH</strong>, dont le siège social est situé 2&nbsp;rue Kellermann – 59100 Roubaix – France.",
+  },
+  {
+    color: '#a8c893',
+    title: 'Rédaction du site',
+    body: "Directeur de la publication&nbsp;: Léa Millet<br />Nom du responsable&nbsp;: Léa Millet",
+  },
+  {
+    color: '#0f8b8d',
+    title: 'Données personnelles',
+    body: "D'une manière générale, vous pouvez visiter le site sans avoir à décliner votre identité et à fournir des informations personnelles vous concernant.",
+  },
+  {
+    color: '#82c5bd',
+    title: 'Cookies',
+    body: "Le site peut collecter automatiquement des informations standard telles que tous types d'informations personnalisées qui permettent au site d'identifier ses visiteurs.<br /><br />Toutes les informations collectées indirectement ne seront utilisées que pour suivre le volume, le type et la configuration du trafic utilisant ce site, pour en développer la conception et l'agencement et à d'autres fins administratives et de planification, et plus généralement pour améliorer le service que nous vous offrons.",
+  },
+];
+---
+<Base
+  title="Léa Millet | Mentions légales"
+  description="Mentions légales du site de Léa Millet, psychologue clinicienne D.E à Miramas."
+  canonical="https://milletlea-psychologue.com/mentions"
+  noindex={true}
+>
+  <Navbar isHome={false} />
+
+  <main id="accueil" class="ml-page">
+    <!-- Halos décoratifs -->
+    <div class="ml-blob ml-blob-a" aria-hidden="true"></div>
+    <div class="ml-blob ml-blob-b" aria-hidden="true"></div>
+
+    <div class="ml-wrap">
+      <!-- En-tête -->
+      <header class="ml-header">
+        <h1 class="ml-title ml-anim" style="--d:0ms">Mentions légales</h1>
+        <div class="ml-title-rule ml-anim" style="--d:120ms"></div>
+        <p class="ml-intro ml-anim" style="--d:220ms">
+          Conformément aux dispositions des articles 6-III et 19 de la Loi n°&nbsp;2004-575
+          du 21&nbsp;juin 2004 pour la Confiance dans l'économie numérique, dite L.C.E.N.,
+          nous portons à la connaissance des utilisateurs et visiteurs du site les
+          informations suivantes&nbsp;:
+        </p>
+      </header>
+
+      <!-- Cartes -->
+      <div class="ml-grid">
+        {sections.map((s, i) => (
+          <div class="ml-anim" style={`--d:${320 + i * 90}ms`}>
+            <article class="ml-card" style={`--accent:${s.color};`}>
+              <div class="ml-card-body">
+                <h2 class="ml-card-title">{s.title}</h2>
+                <p set:html={s.body}></p>
+              </div>
+            </article>
+          </div>
+        ))}
+      </div>
+
+      <!-- Retour accueil -->
+      <div class="ml-back ml-anim" style={`--d:${320 + sections.length * 90}ms`}>
+        <a href="/" class="ml-back-btn">Retour à l'accueil</a>
+      </div>
+    </div>
+  </main>
+
+  <Footer isHome={false} />
+</Base>
+
+<style>
+  .ml-page {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    padding: calc(62px + 3.5rem) 1.25rem 5rem;
+    background:
+      radial-gradient(120% 60% at 50% 0%, rgba(1,109,119,0.14), transparent 60%),
+      linear-gradient(170deg, #f7fce9 0%, #eef8e6 55%, #e7f5df 100%);
+  }
+
+  /* Halos d'ambiance */
+  .ml-blob {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(10px);
+    opacity: 0;
+    animation: ml-blob-in 1.4s ease forwards;
+  }
+  .ml-blob-a {
+    width: 420px; height: 420px;
+    top: -120px; right: -100px;
+    background: radial-gradient(circle, rgba(1,109,119,0.14) 0%, transparent 70%);
+  }
+  .ml-blob-b {
+    width: 380px; height: 380px;
+    bottom: -120px; left: -120px;
+    background: radial-gradient(circle, rgba(168,200,147,0.18) 0%, transparent 70%);
+    animation-delay: 0.3s;
+  }
+  @keyframes ml-blob-in { to { opacity: 1; } }
+
+  .ml-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  /* ── Animation d'entrée ── */
+  .ml-anim {
+    opacity: 0;
+    transform: translateY(26px);
+    animation: ml-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: var(--d, 0ms);
+  }
+  @keyframes ml-rise {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ml-anim { opacity: 1; transform: none; animation: none; }
+    .ml-blob { opacity: 1; animation: none; }
+  }
+
+  /* ── En-tête ── */
+  .ml-header { text-align: center; margin-bottom: 3rem; }
+
+  .ml-title {
+    font-family: 'Candal', sans-serif;
+    font-size: clamp(1.9rem, 6vw, 2.9rem);
+    letter-spacing: 0.06em;
+    color: #22423f;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .ml-title-rule {
+    width: 64px; height: 4px;
+    margin: 1.1rem auto 1.6rem;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #016d77, #a8c893);
+    transform-origin: center;
+  }
+
+  .ml-intro {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: #566766;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  /* ── Cartes ── */
+  .ml-grid { display: flex; flex-direction: column; gap: 1.1rem; }
+
+  .ml-card {
+    position: relative;
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.9);
+    border-radius: 20px;
+    padding: 1.5rem 1.75rem;
+    box-shadow: 0 10px 30px rgba(95,168,159,0.14), 0 2px 8px rgba(1,109,119,0.06);
+    overflow: hidden;
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s ease;
+  }
+  .ml-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 110px; height: 110px;
+    background: radial-gradient(circle at top right, var(--accent, #016d77) 0%, transparent 70%);
+    opacity: 0.7;
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .ml-card:hover::before { opacity: 1; transform: scale(1.15); }
+  .ml-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 22px 44px rgba(1,109,119,0.16), 0 4px 12px rgba(95,168,159,0.12);
+  }
+
+  .ml-card-body { position: relative; z-index: 1; flex: 1; min-width: 0; }
+
+  .ml-card-title {
+    font-family: 'Candal', sans-serif;
+    font-size: 1.02rem;
+    letter-spacing: 0.04em;
+    color: #22423f;
+    margin: 0 0 0.5rem;
+  }
+
+  .ml-card-body p {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: #667776;
+    margin: 0;
+  }
+  .ml-card-body strong { color: #016d77; }
+
+  /* ── Retour ── */
+  .ml-back { text-align: center; margin-top: 2.75rem; }
+
+  .ml-back-btn {
+    display: inline-flex;
+    align-items: center;
+    font-family: 'Candal', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(135deg, #0f8b8d, #016d77);
+    padding: 0.8rem 1.9rem;
+    border-radius: 999px;
+    box-shadow: 0 8px 22px rgba(1,109,119,0.32);
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s ease;
+  }
+  .ml-back-btn:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 14px 32px rgba(1,109,119,0.45);
+  }
+
+  @media (max-width: 560px) {
+    .ml-card { padding: 1.3rem 1.25rem; }
+  }
+</style>

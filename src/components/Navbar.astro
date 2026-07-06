@@ -1,0 +1,584 @@
+---
+interface Props {
+  isHome?: boolean;
+}
+const { isHome = true } = Astro.props;
+
+const navItems = [
+  { id: 'accueil',      label: 'Accueil',      n: '01' },
+  { id: 'presentation', label: 'Présentation', n: '02' },
+  { id: 'pratique',     label: 'Pratique',     n: '03' },
+  { id: 'tarification', label: 'Tarifs',       n: '04' },
+  { id: 'lieux',        label: 'Lieux',        n: '05' },
+  { id: 'contact',      label: 'Contact',      n: '06' },
+];
+
+const DOCTOLIB = 'https://www.doctolib.fr/psychologue/miramas/lea-millet';
+---
+
+<style is:global>
+/* ═══════════════════════════════════════════════════
+   TOP NAVBAR
+═══════════════════════════════════════════════════ */
+
+#chr-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 62px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 24px;
+  gap: 16px;
+  background: rgba(1, 74, 82, 0.28);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: background 0.5s ease;
+}
+
+/* ── Logo ── */
+.chr-logo {
+  display: block;
+  width: 38px; height: 38px;
+  padding: 4px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(130, 197, 189, 0.75);
+  background: #ffffff;
+  flex-shrink: 0;
+  transition:
+    border-color 0.3s ease,
+    transform    0.4s cubic-bezier(0.34,1.56,0.64,1),
+    box-shadow   0.3s ease;
+  box-shadow: 0 2px 14px rgba(1, 109, 119, 0.30);
+}
+.chr-logo:hover {
+  border-color: #016d77;
+  transform: scale(1.1);
+  box-shadow: 0 4px 22px rgba(1, 109, 119, 0.55);
+}
+.chr-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+/* ── Séparateur ── */
+.chr-divider {
+  width: 1px; height: 18px;
+  background: rgba(255,255,255,0.22);
+  flex-shrink: 0;
+  transition: background 0.5s ease;
+}
+
+/* ── Items container ── */
+.chr-items {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+  justify-content: center;
+}
+
+/* ── Item ── */
+.chr-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.2s ease;
+}
+.chr-item:hover { background: rgba(255,255,255,0.09); }
+
+.chr-num {
+  font-family: 'Candal', sans-serif;
+  font-size: 7px; letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.45);
+  line-height: 1; user-select: none;
+  transition: color 0.35s ease;
+}
+.chr-label {
+  font-family: 'Candal', sans-serif;
+  font-size: 9px; letter-spacing: 0.20em; text-transform: uppercase;
+  color: rgba(255,255,255,0.82);
+  white-space: nowrap;
+  transition: color 0.35s ease;
+}
+
+.chr-item:hover .chr-num   { color: rgba(255,255,255,0.70); }
+.chr-item:hover .chr-label { color: rgba(255,255,255,1); }
+
+/* Active */
+.chr-item.active .chr-num   { color: #a7dae5; }
+.chr-item.active .chr-label { color: #ffffff; }
+.chr-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 1px; left: 12px; right: 12px;
+  height: 2px;
+  background: linear-gradient(90deg, #016d77, #a7dae5);
+  border-radius: 2px;
+  box-shadow: 0 0 7px rgba(167,218,229,0.60);
+}
+
+/* ── RDV pill ── */
+.chr-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Candal', sans-serif;
+  font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 999px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.chr-back-btn:hover {
+  color: rgba(255,255,255,1);
+  background: rgba(255,255,255,0.10);
+}
+
+.chr-rdv {
+  font-family: 'Candal', sans-serif;
+  font-size: 8.5px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: #016d77;
+  background: #ffffff;
+  border: 2px solid rgba(130, 197, 189, 0.75);
+  border-radius: 999px;
+  padding: 7px 18px;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition:
+    border-color 0.3s ease,
+    transform    0.4s cubic-bezier(0.34,1.56,0.64,1),
+    box-shadow   0.3s ease;
+  box-shadow: 0 2px 14px rgba(1, 109, 119, 0.30);
+}
+.chr-rdv:hover {
+  border-color: #016d77;
+  transform: scale(1.06) translateY(-1px);
+  box-shadow: 0 8px 28px rgba(1, 109, 119, 0.55);
+}
+
+/* ── Barre de progression (en bas de la nav) ── */
+.chr-progress {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: rgba(130, 197, 189, 0.12);
+  pointer-events: none;
+}
+#chr-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #016d77 0%, #a8c893 100%);
+  transition: width 0.5s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 0 0 8px rgba(1, 109, 119, 0.55);
+  border-radius: 0 2px 2px 0;
+}
+
+/* ═══════════════════════════════════════════════════
+   THEMES COULEUR (classe sur #chr-nav par JS)
+═══════════════════════════════════════════════════ */
+
+/* ── nav-on-light : fonds clairs (Pratique, Lieux) ── */
+#chr-nav.nav-on-light {
+  background: rgba(244, 254, 215, 0.30);
+}
+#chr-nav.nav-on-light .chr-divider { background: rgba(1, 74, 82, 0.18); }
+
+#chr-nav.nav-on-light .chr-num           { color: rgba(1, 74, 82, 0.48); }
+#chr-nav.nav-on-light .chr-item:hover .chr-num  { color: rgba(1, 74, 82, 0.80); }
+#chr-nav.nav-on-light .chr-item.active .chr-num { color: #016d77; }
+
+#chr-nav.nav-on-light .chr-label         { color: rgba(30, 60, 62, 0.72); }
+#chr-nav.nav-on-light .chr-item:hover .chr-label { color: rgba(10, 40, 42, 0.95); }
+#chr-nav.nav-on-light .chr-item.active .chr-label { color: #016d77; }
+
+#chr-nav.nav-on-light .chr-item:hover    { background: rgba(1, 74, 82, 0.06); }
+#chr-nav.nav-on-light .chr-item.active::after {
+  background: linear-gradient(90deg, #016d77, #5fa89f);
+  box-shadow: 0 0 7px rgba(1, 109, 119, 0.45);
+}
+#chr-nav.nav-on-light .chr-rdv {
+  color: #016d77;
+  border-color: rgba(1, 109, 119, 0.55);
+  box-shadow: 0 2px 14px rgba(1, 109, 119, 0.24);
+}
+#chr-nav.nav-on-light .chr-rdv:hover {
+  border-color: #014a52;
+  box-shadow: 0 8px 28px rgba(1, 109, 119, 0.45);
+}
+
+/* ── nav-on-dark : fonds colorés — styles de base ── */
+
+/* ═══════════════════════════════════════════════════
+   MOBILE — hamburger DANS la nav
+═══════════════════════════════════════════════════ */
+.mob-toggle {
+  display: none;
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid rgba(130, 197, 189, 0.75);
+  box-shadow: 0 2px 14px rgba(1, 109, 119, 0.30);
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: border-color 0.3s ease, transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+  -webkit-appearance: none; appearance: none;
+}
+.mob-toggle:hover {
+  border-color: #016d77;
+  transform: scale(1.1);
+  box-shadow: 0 4px 22px rgba(1, 109, 119, 0.55);
+}
+.mob-toggle span {
+  display: block;
+  width: 18px; height: 1.5px;
+  background: rgba(1, 74, 82, 0.85);
+  border-radius: 999px;
+  transform-origin: center;
+  transition:
+    transform 0.38s cubic-bezier(0.34,1.56,0.64,1),
+    opacity   0.2s ease,
+    width     0.25s ease;
+}
+.mob-toggle.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.mob-toggle.is-open span:nth-child(2) { opacity: 0; width: 0; }
+.mob-toggle.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+@media (max-width: 1023px) {
+  .chr-items, .chr-rdv, .chr-divider { display: none !important; }
+  .mob-toggle { display: flex; }
+}
+
+/* ═══════════════════════════════════════════════════
+   MOBILE FULL-SCREEN OVERLAY
+═══════════════════════════════════════════════════ */
+.mob-overlay {
+  position: fixed; inset: 0;
+  z-index: 1500;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(1, 40, 45, 0.94);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.38s ease;
+}
+.mob-overlay.is-open { opacity: 1; pointer-events: auto; }
+
+/* Aurora blobs */
+.mob-blob-a {
+  position: absolute;
+  width: 500px; height: 500px;
+  top: -120px; right: -120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(1, 109, 119, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+  animation: chr-blob-a 13s ease-in-out infinite;
+}
+.mob-blob-b {
+  position: absolute;
+  width: 380px; height: 380px;
+  bottom: -80px; left: -80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(168, 200, 147, 0.16) 0%, transparent 70%);
+  pointer-events: none;
+  animation: chr-blob-a 9s ease-in-out infinite reverse;
+}
+@keyframes chr-blob-a {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  50%       { transform: translate(25px,-25px) scale(1.08); }
+}
+
+.mob-panel {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0; width: 100%;
+  padding: 64px 32px;
+  max-height: 100vh; overflow-y: auto;
+}
+
+/* Mobile nav links */
+@keyframes mob-in {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.mob-link {
+  display: flex; align-items: baseline; gap: 14px;
+  text-decoration: none;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(130, 197, 189, 0.10);
+  width: 100%; max-width: 300px;
+  opacity: 0;
+  transition: transform 0.2s ease;
+}
+.mob-overlay.is-open .mob-link {
+  animation: mob-in 0.5s cubic-bezier(0.22,1,0.36,1) forwards;
+  animation-delay: calc(var(--i) * 70ms + 80ms);
+}
+.mob-link:hover { transform: translateX(9px); }
+
+.mob-link-n {
+  font-family: 'Candal', sans-serif;
+  font-size: 9px; letter-spacing: 0.1em;
+  color: rgba(167, 218, 229, 0.55);
+  flex-shrink: 0; width: 22px;
+}
+.mob-link-text {
+  font-family: 'Candal', sans-serif;
+  font-size: clamp(1.6rem, 7.5vw, 2.4rem);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  color: rgba(244, 254, 215, 0.90); line-height: 1;
+  transition: color 0.2s ease;
+}
+.mob-link:hover .mob-link-text { color: #a7dae5; }
+.mob-link.active .mob-link-text { color: #a7dae5; }
+
+/* Mobile Doctolib CTA */
+.mob-rdv {
+  margin-top: 34px;
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'Candal', sans-serif;
+  font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(244, 254, 215, 0.92);
+  background: rgba(1, 109, 119, 0.30);
+  border: 1px solid rgba(130, 197, 189, 0.32);
+  border-radius: 999px;
+  padding: 12px 24px;
+  text-decoration: none;
+  opacity: 0;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.mob-overlay.is-open .mob-rdv {
+  animation: mob-in 0.5s cubic-bezier(0.22,1,0.36,1) forwards;
+  animation-delay: 560ms;
+}
+.mob-rdv:hover {
+  background: rgba(1, 109, 119, 0.48);
+  transform: scale(1.04);
+}
+</style>
+
+<!-- ═══════════════════════════════════════════════════
+     DESKTOP TOP NAVBAR
+═══════════════════════════════════════════════════ -->
+{isHome ? (
+  <nav id="chr-nav" aria-label="Navigation principale">
+
+    <a href="#accueil" class="chr-logo" aria-label="Accueil — Léa Millet">
+      <img src="/pictures/logo.png" alt="Logo Léa Millet" />
+    </a>
+
+    <div class="chr-divider" aria-hidden="true"></div>
+
+    <div class="chr-items">
+      {navItems.map(item => (
+        <a href={`#${item.id}`} class="chr-item" data-section={item.id} aria-label={item.label}>
+          <span class="chr-num">{item.n}</span>
+          <span class="chr-label">{item.label}</span>
+        </a>
+      ))}
+    </div>
+
+    <div class="chr-divider" aria-hidden="true"></div>
+
+    <a
+      href={`${DOCTOLIB}/booking`}
+      class="chr-rdv"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Prendre rendez-vous sur Doctolib"
+    >Prendre RDV</a>
+
+    <!-- Hamburger mobile (à l'intérieur de la nav) -->
+    <button id="mob-toggle" class="mob-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <!-- Barre de progression -->
+    <div class="chr-progress" aria-hidden="true">
+      <div id="chr-fill"></div>
+    </div>
+
+  </nav>
+) : (
+  <nav id="chr-nav" class="nav-on-light" aria-label="Navigation">
+    <a href="/" class="chr-logo" aria-label="Retour au site — Léa Millet">
+      <img src="/pictures/logo.png" alt="Logo Léa Millet" />
+    </a>
+    <div class="chr-divider" aria-hidden="true"></div>
+    <a href="/" class="chr-back-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      Retour au site
+    </a>
+    <div style="flex:1;"></div>
+    <a
+      href={`${DOCTOLIB}/booking`}
+      class="chr-rdv"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Prendre rendez-vous sur Doctolib"
+    >Prendre RDV</a>
+  </nav>
+)}
+
+<!-- ═══════════════════════════════════════════════════
+     MOBILE FULL OVERLAY
+═══════════════════════════════════════════════════ -->
+{isHome && (
+  <div id="mob-overlay" class="mob-overlay" aria-hidden="true">
+    <div class="mob-blob-a" aria-hidden="true"></div>
+    <div class="mob-blob-b" aria-hidden="true"></div>
+    <div class="mob-panel">
+      {navItems.map((item, i) => (
+        <a
+          href={`#${item.id}`}
+          class="mob-link"
+          data-mob-link
+          data-section={item.id}
+          style={`--i:${i}`}
+        >
+          <span class="mob-link-n">{item.n}</span>
+          <span class="mob-link-text">{item.label}</span>
+        </a>
+      ))}
+      <a
+        href={`${DOCTOLIB}/booking`}
+        class="mob-rdv"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Prendre rendez-vous
+        <img
+          src="https://pro.doctolib.fr/external_button/doctolib-white-transparent.png"
+          alt="Doctolib"
+          style="height:15px;width:auto;display:inline-block;"
+        />
+      </a>
+    </div>
+  </div>
+)}
+
+<script>
+(function () {
+  const nav     = document.getElementById('chr-nav')     as HTMLElement | null;
+  const fill    = document.getElementById('chr-fill')    as HTMLElement | null;
+  const toggle  = document.getElementById('mob-toggle')  as HTMLButtonElement | null;
+  const overlay = document.getElementById('mob-overlay') as HTMLElement | null;
+  const items   = document.querySelectorAll<HTMLElement>('.chr-item');
+  const mobLinks= document.querySelectorAll<HTMLElement>('.mob-link');
+
+  const sectionIds = ['accueil', 'presentation', 'pratique', 'tarification', 'lieux', 'contact'];
+
+  const sectionTheme: Record<string, string> = {
+    accueil:      'dark',
+    presentation: 'dark',
+    pratique:     'light',
+    tarification: 'dark',
+    lieux:        'light',
+    contact:      'dark',
+  };
+
+  let menuOpen = false;
+
+  /* ── Active section + thème ── */
+  function setActive(id: string) {
+    const idx = sectionIds.indexOf(id);
+    if (idx === -1) return;
+
+    items.forEach((el) => el.classList.toggle('active', el.dataset.section === id));
+    mobLinks.forEach(el => el.classList.toggle('active', el.dataset.section === id));
+
+    if (fill) {
+      const pct = (idx / (sectionIds.length - 1)) * 100;
+      fill.style.width = `${pct}%`;
+    }
+
+    if (nav) {
+      nav.classList.toggle('nav-on-light', sectionTheme[id] === 'light');
+      nav.classList.toggle('nav-on-dark',  sectionTheme[id] === 'dark');
+    }
+  }
+
+  /* IntersectionObserver — viewport vertical */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) setActive(entry.target.id);
+    });
+  }, { threshold: 0.25, root: null, rootMargin: '-62px 0px -45% 0px' });
+
+  sectionIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  /* ── Mobile menu ── */
+  function openMenu() {
+    menuOpen = true;
+    overlay?.classList.add('is-open');
+    toggle?.classList.add('is-open');
+    toggle?.setAttribute('aria-expanded', 'true');
+    overlay?.setAttribute('aria-hidden', 'false');
+  }
+  function closeMenu() {
+    menuOpen = false;
+    overlay?.classList.remove('is-open');
+    toggle?.classList.remove('is-open');
+    toggle?.setAttribute('aria-expanded', 'false');
+    overlay?.setAttribute('aria-hidden', 'true');
+  }
+
+  toggle?.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
+  overlay?.addEventListener('click', (e: MouseEvent) => {
+    if (e.target === overlay) closeMenu();
+  });
+  document.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (e.key === 'Escape' && menuOpen) closeMenu();
+  });
+
+  /* ── Navigation verticale fluide ── */
+  const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+  function scrollToSection(targetEl: HTMLElement) {
+    if (targetEl.id === 'accueil') {
+      window.scrollTo({ top: 0, behavior: isTouch ? 'auto' : 'smooth' });
+      return;
+    }
+    const anchor = targetEl.querySelector<HTMLElement>(
+      '.section-heading, .prat-header, .pres-header'
+    ) ?? targetEl;
+    const top = anchor.getBoundingClientRect().top + window.scrollY - 62 - 12;
+    window.scrollTo({ top: Math.max(0, top), behavior: isTouch ? 'auto' : 'smooth' });
+  }
+
+  document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      if (!href || href === '#') return;
+      const target = document.querySelector<HTMLElement>(href);
+      if (!target) return;
+      e.preventDefault();
+      history.pushState(null, '', href);
+      if (menuOpen) {
+        closeMenu();
+        setTimeout(() => scrollToSection(target), 400);
+      } else {
+        scrollToSection(target);
+      }
+    });
+  });
+
+  /* ── Initial ── */
+  setActive('accueil');
+})();
+</script>
