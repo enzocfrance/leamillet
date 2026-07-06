@@ -1,0 +1,37 @@
+---
+/*
+  Placeholder de la mascotte « cerveau » de la maquette.
+  ⚠️  À remplacer par les vraies illustrations (PNG transparents) dans public/pictures/.
+  Il suffira de swaper le <span> emoji par une <img src="/pictures/brain-xxx.png" />.
+*/
+interface Props {
+  size?: number;      // diamètre en px
+  float?: boolean;    // animation flottante
+  class?: string;
+  label?: string;     // texte optionnel sous la mascotte
+}
+const { size = 90, float = true, class: klass = '', label } = Astro.props;
+const emojiSize = Math.round(size * 0.5);
+---
+<div class={`mascot-wrap ${klass}`} aria-hidden="true">
+  <span
+    class:list={['mascot', { 'mascot-float': float }]}
+    style={`width:${size}px; height:${size}px; font-size:${emojiSize}px;`}
+  >🧠</span>
+  {label && <span class="mascot-label">{label}</span>}
+</div>
+
+<style>
+  .mascot-wrap {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .mascot-label {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: #5a675e;
+  }
+</style>

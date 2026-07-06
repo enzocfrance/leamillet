@@ -1,0 +1,63 @@
+---
+/* Traits dessinés à la main (comme les accents noirs de la maquette). */
+interface Props {
+  variant?: 'sparkle' | 'swoosh' | 'arrow' | 'underline';
+  width?: number;
+  class?: string;
+  stroke?: string;
+  strokeWidth?: number;
+}
+const {
+  variant = 'sparkle',
+  width = 60,
+  class: klass = '',
+  stroke = '#2b342d',
+  strokeWidth = 2.4,
+} = Astro.props;
+
+const boxes: Record<string, string> = {
+  sparkle:   '0 0 48 48',
+  swoosh:    '0 0 160 26',
+  arrow:     '0 0 70 46',
+  underline: '0 0 160 20',
+};
+const ratios: Record<string, number> = {
+  sparkle: 1, swoosh: 26 / 160, arrow: 46 / 70, underline: 20 / 160,
+};
+const h = Math.round(width * ratios[variant]);
+---
+<svg
+  class={`scribble ${klass}`}
+  width={width}
+  height={h}
+  viewBox={boxes[variant]}
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+  style={`--sc-stroke:${stroke}; --sc-w:${strokeWidth};`}
+>
+  {variant === 'sparkle' && (
+    <g>
+      <path d="M24 4 C 22 12, 22 16, 24 22" />
+      <path d="M40 14 C 33 18, 30 20, 25 24" />
+      <path d="M8 16 C 15 19, 18 21, 23 25" />
+    </g>
+  )}
+  {variant === 'swoosh' && (
+    <path d="M4 14 C 40 2, 80 24, 120 10 S 152 6, 156 14" />
+  )}
+  {variant === 'arrow' && (
+    <g>
+      <path d="M6 8 C 26 34, 46 36, 62 20" />
+      <path d="M62 20 L 50 20" />
+      <path d="M62 20 L 57 32" />
+    </g>
+  )}
+  {variant === 'underline' && (
+    <path d="M4 12 C 44 4, 72 18, 110 8 S 150 10, 156 12" />
+  )}
+</svg>
+
+<style>
+  .scribble path { stroke: var(--sc-stroke, #2b342d); stroke-width: var(--sc-w, 2.4); fill: none; stroke-linecap: round; stroke-linejoin: round; }
+</style>

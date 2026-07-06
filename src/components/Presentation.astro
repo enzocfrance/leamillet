@@ -1,188 +1,122 @@
 ---
-const credentials = [
-  { icon: '🎓', label: 'Master Autisme & Troubles Neurodéveloppementaux' },
-  { icon: '🌱', label: "Formée à l'ESDM — Sessad Smile" },
-  { icon: '🧩', label: 'Intervention précoce' },
-  { icon: '🏫', label: 'Ancienne UEMA & hôpital de jour' },
-];
+import Mascot from './Mascot.astro';
+import Scribble from './Scribble.astro';
 ---
-<section
-  id="presentation"
-  class="relative overflow-hidden"
-  style="background: linear-gradient(160deg, #82c5bd 0%, #6fb3ab 55%, #5fa89f 100%);"
->
-  <div class="mx-auto w-full max-w-5xl px-5 sm:px-10">
+<section id="presentation" class="section presentation">
+  <div class="pres-mascot pres-mascot-1"><Mascot size={64} /></div>
+  <div class="pres-scribble pres-scribble-1"><Scribble variant="sparkle" width={46} /></div>
 
-    <h2 class="scroll-zoom section-heading heading-light">PRÉSENTATION</h2>
+  <div class="section-inner pres-inner">
 
-    <div class="pres-grid">
+    <div class="pres-text">
+      <p class="reveal">
+        Psychologue diplômée depuis 2022. Titulaire d'un master spécialisé dans l'autisme et les
+        troubles du neurodéveloppement, j'ai été formée à l'évaluation psychologique et
+        neuropsychologique pour l'utilisation des tests psychométriques. Mon approche est
+        principalement orientée vers les <strong>thérapies cognitives et comportementales (TCC)</strong>
+        et s'appuie sur des modèles d'intervention recommandés tels que l'<strong>ABA</strong>, le
+        programme <strong>TEACCH</strong> et le modèle de <strong>Denver (ESDM)</strong>.
+      </p>
+      <p class="reveal reveal-delay-1">
+        Mon expérience professionnelle comprend un travail en Unité d'enseignement maternelle autisme
+        (UEMA), au sein d'une équipe pluridisciplinaire en collaboration avec un établissement
+        scolaire, ainsi qu'en hôpital de jour, service de pédopsychiatrie. J'interviens également dans
+        des actions de sensibilisation et dans la supervision auprès de professionnels de la petite
+        enfance.
+      </p>
+      <p class="reveal reveal-delay-2">
+        Dans ma pratique, j'accorde une importance particulière à l'écoute, à l'adaptation des
+        accompagnements aux besoins de chaque enfant et à la collaboration avec les familles et les
+        différents professionnels qui l'entourent.
+      </p>
+    </div>
 
-      <!-- ── Colonne médaillon + credentials ── -->
-      <aside class="pres-aside slide-up">
-        <div class="pres-medallion">
-          <img src="/pictures/logo.png" alt="Léa Millet" />
-        </div>
-        <p class="pres-name">Léa Millet</p>
-        <p class="pres-role">Psychologue Clinicienne D.E</p>
+    <!-- Photo + citation -->
+    <div class="pres-profile reveal">
+      <figure class="pres-photo">
+        <img src="/pictures/lea-photo.png" alt="Léa Millet, psychologue clinicienne D.E" loading="lazy" width="291" height="418" />
+      </figure>
 
-        <ul class="pres-creds">
-          {credentials.map(c => (
-            <li class="pres-cred">
-              <span class="pres-cred-icon" aria-hidden="true">{c.icon}</span>
-              <span>{c.label}</span>
-            </li>
-          ))}
-        </ul>
-      </aside>
-
-      <!-- ── Colonne bio ── -->
-      <div class="pres-bio slide-up">
-        <span class="pres-quote" aria-hidden="true">“</span>
-
+      <div class="pres-quote">
+        <div class="pres-quote-scribble"><Scribble variant="sparkle" width={40} /></div>
         <p>
-          Je suis <strong>Léa Millet</strong>, psychologue clinicienne D.E spécialisée dans les
-          troubles neurodéveloppementaux. J'ai choisi d'orienter mon cursus universitaire dans un
-          master de psychologie clinique, psychopathologie de la santé, parcours
-          <strong>autisme et autres troubles neurodéveloppementaux</strong>, fondé par le Docteur
-          en psychologie Bernadette&nbsp;Rogé. Lors de ma formation, j'ai eu l'opportunité de me
-          former durant un stage à <strong>l'ESDM</strong> au sein du Sessad&nbsp;Smile. Cette
-          expérience m'a permis de développer ma pratique dans l'intervention précoce.
-        </p>
-
-        <p>
-          Après deux années passées à exercer mon métier au sein d'un <strong>dispositif UEMA</strong>
-          (unités d'enseignement maternelle pour les enfants autistes) et en hôpital de jour pour
-          enfants — présentant des troubles neurodéveloppementaux, des troubles anxieux ou de
-          l'attachement — j'installe aujourd'hui <strong>mon cabinet libéral</strong> dans la
-          commune de Miramas.
+          Je suis convaincue de l'importance d'un accompagnement précoce et individualisé&nbsp;:
+          je m'engage à soutenir chaque enfant et sa famille avec
+          <strong>bienveillance, rigueur et respect de leur singularité.</strong>
         </p>
       </div>
-
     </div>
-  </div>
 
-  <!-- Wave → pratique (#eef8e6) -->
-  <div class="wave-seal pointer-events-none absolute bottom-0 left-0 w-full" style="line-height:0; margin-bottom:-1px;" aria-hidden="true">
-    <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width:100%; height:70px; display:block;">
-      <path fill="rgba(213,241,209,0.5)" d="M0,35 C480,0 960,70 1440,35 L1440,70 L0,70 Z"/>
-      <path fill="#eef8e6" d="M0,45 C420,10 1020,65 1440,45 L1440,70 L0,70 Z"/>
-    </svg>
   </div>
 </section>
 
-<style is:global>
-  .pres-grid {
+<style>
+  .presentation {
+    background: #a9c69c;
+    color: #2f3a2c;
+  }
+  .pres-inner { max-width: 860px; }
+
+  .pres-text p {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: clamp(0.9rem, 2vw, 1.02rem);
+    line-height: 1.95;
+    color: #2f3a2c;
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 1.5rem;
+  }
+  .pres-text strong { font-weight: 600; color: #24422a; }
+
+  /* Photo + citation */
+  .pres-profile {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
-    align-items: start;
-  }
-  @media (min-width: 900px) {
-    .pres-grid { grid-template-columns: 300px 1fr; gap: 3rem; }
-  }
-
-  /* ── Aside médaillon ── */
-  .pres-aside {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.16);
-    border: 1px solid rgba(255, 255, 255, 0.28);
-    border-radius: 24px;
-    padding: 2rem 1.5rem;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    box-shadow: 0 12px 40px rgba(1, 74, 82, 0.15);
+    margin-top: 2.5rem;
   }
-  @media (min-width: 900px) {
-    .pres-aside { position: sticky; top: 90px; }
+  @media (min-width: 760px) {
+    .pres-profile { grid-template-columns: 260px 1fr; gap: 2.5rem; }
   }
 
-  .pres-medallion {
-    width: 110px; height: 110px;
-    border-radius: 50%;
-    background: #ffffff;
-    border: 3px solid rgba(255, 255, 255, 0.6);
-    box-shadow: 0 8px 26px rgba(1, 74, 82, 0.25);
-    display: flex; align-items: center; justify-content: center;
-    overflow: hidden;
-    padding: 12px;
-  }
-  .pres-medallion img { width: 100%; height: 100%; object-fit: contain; }
-
-  .pres-name {
-    font-family: 'Candal', sans-serif;
-    font-size: 1.25rem;
-    letter-spacing: 0.04em;
-    color: #ffffff;
-    margin-top: 1.1rem;
-  }
-  .pres-role {
-    font-family: 'Lato', sans-serif;
-    font-size: 0.82rem;
-    font-style: italic;
-    color: rgba(255, 255, 255, 0.82);
-    margin-top: 0.2rem;
-    margin-bottom: 1.4rem;
-  }
-
-  .pres-creds {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
+  .pres-photo { margin: 0; }
+  .pres-photo img {
+    display: block;
     width: 100%;
-    text-align: left;
+    aspect-ratio: 291 / 418;
+    object-fit: cover;
+    border-radius: 18px;
+    background: #eef4e8;
+    padding: 5px;
+    box-shadow: 0 14px 34px rgba(60, 80, 55, 0.2);
   }
-  .pres-cred {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-    font-family: 'Lato', sans-serif;
-    font-size: 0.82rem;
-    line-height: 1.35;
-    color: #21484a;
-    background: rgba(255, 255, 255, 0.55);
-    border-radius: 12px;
-    padding: 0.55rem 0.8rem;
-    transition: transform 0.3s var(--spring), background 0.3s ease;
-  }
-  .pres-cred:hover {
-    transform: translateX(4px);
-    background: rgba(255, 255, 255, 0.78);
-  }
-  .pres-cred-icon { font-size: 1.05rem; flex-shrink: 0; }
 
-  /* ── Bio ── */
-  .pres-bio {
-    position: relative;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 24px;
-    padding: 2.5rem 2.25rem;
-    box-shadow: 0 16px 44px rgba(1, 74, 82, 0.18);
+  .pres-quote { position: relative; }
+  .pres-quote p {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.3vw, 1.2rem);
+    line-height: 1.7;
+    color: #24422a;
+    text-align: center;
   }
-  .pres-quote {
-    position: absolute;
-    top: -0.5rem; left: 1.2rem;
-    font-family: Georgia, serif;
-    font-size: 4.5rem;
-    line-height: 1;
-    color: rgba(1, 109, 119, 0.18);
-    pointer-events: none;
+  @media (min-width: 760px) {
+    .pres-quote p { text-align: left; }
   }
-  .pres-bio p {
-    font-family: 'Lato', sans-serif;
-    font-size: 0.98rem;
-    line-height: 1.9;
-    color: #4a5c5b;
-    margin-bottom: 1.2rem;
-  }
-  .pres-bio p:last-child { margin-bottom: 0; }
-  .pres-bio strong { color: #016d77; font-weight: 700; }
+  .pres-quote strong { font-weight: 700; color: #1d331f; }
+  .pres-quote-scribble { position: absolute; top: -28px; right: 8%; transform: rotate(8deg); }
 
-  @media (max-width: 639px) {
-    .pres-bio { padding: 2rem 1.4rem; }
-    .pres-bio p { font-size: 0.92rem; line-height: 1.8; }
+  /* mascottes + accents */
+  .pres-mascot { position: absolute; opacity: 0.95; line-height: 0; }
+  .pres-mascot-1 { top: 32%; left: 4%; }
+  .pres-scribble { position: absolute; line-height: 0; }
+  .pres-scribble-1 { top: 10%; right: 8%; transform: rotate(-10deg); }
+  .pres-quote-scribble { line-height: 0; }
+
+  @media (max-width: 760px) {
+    .pres-mascot-1 { display: none; }
+    .pres-photo { max-width: 240px; margin: 0 auto; }
   }
 </style>

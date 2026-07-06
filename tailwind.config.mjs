@@ -4,25 +4,28 @@ export default {
   theme: {
     extend: {
       colors: {
-        teal: {
-          DEFAULT: '#0f8b8d',
-          dark: '#016d77',
-          deep: '#014a52',
-        },
+        // Fond vert sauge (du plus clair au plus profond)
         sage: {
-          DEFAULT: '#82c5bd',
-          dark: '#5fa89f',
+          50:  '#eaf2e4',
+          100: '#d7e6cc',
+          200: '#c6dbba',
+          300: '#a9c69c',
+          400: '#93ab82',
+          500: '#7f9a6f',
         },
-        mint: '#d5f1d1',
-        moss: '#a8c893',
-        cream: '#f4fed7',
-        lime: '#e2fdb5',
-        sky: '#a7dae5',
-        ink: '#4c6069',
+        pink: {
+          DEFAULT: '#f0a3b8',
+          soft: '#f8cdd8',
+          deep: '#e087a0',
+        },
+        ink: {
+          DEFAULT: '#37423a',
+          soft: '#5a675e',
+          title: '#2b342d',
+        },
       },
       fontFamily: {
-        lato: ['Lato', 'sans-serif'],
-        candal: ['Candal', 'sans-serif'],
+        quicksand: ['Quicksand', 'sans-serif'],
         montserrat: ['Montserrat', 'sans-serif'],
       },
     },

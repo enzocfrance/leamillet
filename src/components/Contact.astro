@@ -1,135 +1,142 @@
 ---
-const PHONE_DISPLAY = '+33 6 16 03 75 37';
-const PHONE_HREF = 'tel:+33616037537';
-const EMAIL = 'lea.millet.psy13@gmail.com';
-const DOCTOLIB = 'https://www.doctolib.fr/psychologue/miramas/lea-millet/booking';
+import Scribble from './Scribble.astro';
+
+const infos = [
+  {
+    label: 'Téléphone',
+    value: '06 16 03 75 37',
+    href: 'tel:+33616037537',
+    icon: `<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>`,
+  },
+  {
+    label: 'Email',
+    value: 'lea.millet.psy13@gmail.com',
+    href: 'mailto:lea.millet.psy13@gmail.com',
+    icon: `<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>`,
+  },
+  {
+    label: 'Adresse',
+    value: '34 avenue du Maréchal Juin, Miramas',
+    href: 'https://maps.google.com/maps?q=34+avenue+du+Mar%C3%A9chal+Juin+Miramas',
+    icon: `<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>`,
+  },
+  {
+    label: 'Ouverture',
+    value: 'Le mercredi et le vendredi',
+    href: null,
+    icon: `<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>`,
+  },
+];
 ---
-<section
-  id="contact"
-  class="relative pb-32 pt-20"
-  style="background: radial-gradient(ellipse at 10% 90%, rgba(167,218,229,0.22) 0%, transparent 50%), radial-gradient(ellipse at 90% 10%, rgba(168,200,147,0.18) 0%, transparent 50%), linear-gradient(160deg, #0f8b8d 0%, #016d77 100%);"
->
-  <div class="mx-auto max-w-4xl px-5 sm:px-10 md:px-20">
+<section id="contact" class="section contact">
+  <div class="section-inner">
 
-    <h2 class="scroll-zoom section-heading heading-light">ME CONTACTER</h2>
+    <h2 class="sec-title reveal">Contact</h2>
+    <div class="contact-scribble reveal"><Scribble variant="underline" width={130} /></div>
 
-    <p class="slide-up mb-3 text-center italic text-white/85 font-lato">
-      Prendre rendez-vous n'a jamais été aussi simple.
-    </p>
-    <p class="slide-up mb-10 text-center text-sm text-white/80 font-candal" style="letter-spacing:0.04em;">
-      Ouverture le <span style="color:#a7dae5;">mercredi</span>, de 9&nbsp;h à 18&nbsp;h.
-    </p>
+    <div class="contact-grid">
+      <div class="contact-card reveal">
+        <ul class="contact-list">
+          {infos.map(info => (
+            <li class="contact-item">
+              <span class="contact-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={info.icon}></svg>
+              </span>
+              <span class="contact-text">
+                <span class="contact-label">{info.label}</span>
+                {info.href
+                  ? <a href={info.href} class="contact-value" target={info.href.startsWith('http') ? '_blank' : undefined} rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}>{info.value}</a>
+                  : <span class="contact-value">{info.value}</span>}
+              </span>
+            </li>
+          ))}
+        </ul>
 
-    <!-- Cards de contact -->
-    <div class="stagger grid grid-cols-1 gap-6 md:grid-cols-2">
-
-      <!-- Téléphone -->
-      <div class="contact-card slide-up flex flex-col items-center gap-5 rounded-3xl border border-white/25 bg-white/15 p-5 sm:p-8 text-center backdrop-blur-md">
-        <div class="contact-icon-ring">
-          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>
-          </svg>
-        </div>
-        <div>
-          <p class="mb-1 text-[10px] tracking-widest text-white/60 uppercase">Téléphone</p>
-          <a href={PHONE_HREF} class="contact-info-link" style="font-family:'Candal',sans-serif; font-size:1.1rem;">{PHONE_DISPLAY}</a>
-        </div>
-        <a href={PHONE_HREF} class="btn-primary mt-auto text-white shadow-md" style="background:#016d77;">
-          Appeler le cabinet
-        </a>
+        <a href="tel:+33616037537" class="btn-soft contact-cta">Prendre contact</a>
       </div>
 
-      <!-- Email -->
-      <div class="contact-card slide-up flex flex-col items-center gap-5 rounded-3xl border border-white/25 bg-white/15 p-5 sm:p-8 text-center backdrop-blur-md">
-        <div class="contact-icon-ring">
-          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="2" y="4" width="20" height="16" rx="2"/>
-            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-          </svg>
-        </div>
-        <div>
-          <p class="mb-1 text-[10px] tracking-widest text-white/60 uppercase">Email</p>
-          <a
-            href={`mailto:${EMAIL}`}
-            class="contact-info-link"
-            style="font-family:'Candal',sans-serif; font-size:0.82rem; display:inline-block; max-width:24ch; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; vertical-align:bottom;"
-          >{EMAIL}</a>
-        </div>
-        <a href={`mailto:${EMAIL}`} class="btn-primary mt-auto text-white shadow-md" style="background:#016d77;">
-          Envoyer un mail
-        </a>
+      <div class="contact-map reveal reveal-delay-1">
+        <iframe
+          src="https://maps.google.com/maps?q=34%20avenue%20du%20Mar%C3%A9chal%20Juin%20Miramas&z=14&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Localisation du cabinet — 34 avenue du Maréchal Juin, Miramas"
+        ></iframe>
       </div>
-
     </div>
 
-    <!-- Doctolib CTA -->
-    <div class="slide-up mt-12 text-center">
-      <p class="mb-4 text-sm text-white/80" style="font-family:'Candal',sans-serif;">ou directement en ligne&nbsp;:</p>
-      <a
-        href={DOCTOLIB}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn-primary inline-flex items-center gap-2 bg-white/25 text-white backdrop-blur-sm hover:bg-white/40"
-      >
-        Prendre rendez-vous sur
-        <img src="https://pro.doctolib.fr/external_button/doctolib-white-transparent.png" alt="Doctolib" class="block h-[18px] w-auto" />
-      </a>
-    </div>
-
-  </div>
-
-  <!-- Wave → footer (#016d77) -->
-  <div class="wave-seal pointer-events-none absolute bottom-0 left-0 w-full" style="line-height:0; margin-bottom:-1px;" aria-hidden="true">
-    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width:100%; height:60px; display:block;">
-      <path fill="#016d77" d="M0,40 C420,10 1020,60 1440,35 L1440,60 L0,60 Z"/>
-    </svg>
   </div>
 </section>
 
-<style is:global>
-  /* ── Icon ring + pulse animation ───────────────────────── */
-  .contact-icon-ring {
-    display: flex; align-items: center; justify-content: center;
-    border: 2px solid rgba(255, 255, 255, 0.35);
-    border-radius: 50%;
-    padding: 16px;
-    animation: contact-ring-pulse 2.5s ease-in-out infinite;
+<style>
+  .contact { background: #c6dbba; }
+  .contact-scribble { display: flex; justify-content: center; margin: 0.3rem 0 2.4rem; line-height: 0; }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    align-items: stretch;
+    max-width: 860px;
+    margin: 0 auto;
   }
-  @keyframes contact-ring-pulse {
-    0%   { box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.35); }
-    50%  { box-shadow: 0 0 0 12px rgba(255, 255, 255, 0); }
-    100% { box-shadow: 0 0 0 0px rgba(255, 255, 255, 0); }
+  @media (min-width: 820px) {
+    .contact-grid { grid-template-columns: 1fr 1fr; }
   }
 
-  /* ── Info links ─────────────────────────────────────────── */
-  .contact-info-link {
-    color: white;
-    text-decoration: none;
-    border-bottom: 1.5px solid rgba(255, 255, 255, 0.3);
-    padding-bottom: 2px;
-    transition: border-color 0.2s ease;
-  }
-  .contact-info-link:hover { border-color: white; }
-
-  /* ── Card hover + shine sweep ───────────────────────────── */
   .contact-card {
-    position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 22px;
+    padding: 1.8rem 1.6rem;
+    box-shadow: 0 14px 34px rgba(60, 80, 55, 0.12);
+    display: flex;
+    flex-direction: column;
   }
-  .contact-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 1.5rem;
-    background: linear-gradient(115deg, transparent 0%, transparent 40%, rgba(255, 255, 255, 0.12) 50%, transparent 60%, transparent 100%);
-    background-size: 200% 100%;
-    background-position: -100% 0;
-    transition: background-position 0.5s ease;
-    pointer-events: none;
+  .contact-list { list-style: none; display: flex; flex-direction: column; gap: 1.1rem; }
+  .contact-item { display: flex; align-items: center; gap: 0.9rem; }
+  .contact-icon {
+    flex-shrink: 0;
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    background: #93ab82;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 5px 14px rgba(127, 154, 111, 0.35);
   }
-  .contact-card:hover::after { background-position: 200% 0; }
-  .contact-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  .contact-text { display: flex; flex-direction: column; min-width: 0; }
+  .contact-label {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6f8064;
+  }
+  .contact-value {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #2b342d;
+    text-decoration: none;
+    word-break: break-word;
+  }
+  a.contact-value:hover { color: #e087a0; }
+  .contact-cta { align-self: flex-start; margin-top: 1.6rem; }
+
+  .contact-map {
+    border-radius: 22px;
+    overflow: hidden;
+    padding: 4px;
+    background: linear-gradient(135deg, #93ab82, #a9c69c, #e087a0);
+    box-shadow: 0 14px 34px rgba(60, 80, 55, 0.18);
+    min-height: 280px;
+  }
+  .contact-map iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 272px;
+    border: none;
+    border-radius: 18px;
   }
 </style>
