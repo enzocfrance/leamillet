@@ -3,8 +3,8 @@ import Mascot from './Mascot.astro';
 import Scribble from './Scribble.astro';
 ---
 <section id="presentation" class="section presentation">
-  <div class="pres-mascot pres-mascot-1"><Mascot size={64} /></div>
-  <div class="pres-scribble pres-scribble-1"><Scribble variant="sparkle" width={46} /></div>
+  <div class="pres-mascot pres-mascot-1" data-parallax="0.09"><Mascot size={64} /></div>
+  <div class="pres-scribble pres-scribble-1" data-parallax="-0.07"><Scribble variant="sparkle" width={46} /></div>
 
   <div class="section-inner pres-inner">
 
@@ -32,13 +32,13 @@ import Scribble from './Scribble.astro';
     </div>
 
     <!-- Photo + citation -->
-    <div class="pres-profile reveal">
-      <figure class="pres-photo">
+    <div class="pres-profile">
+      <figure class="pres-photo reveal reveal-left">
         <img src="/pictures/lea-photo.png" alt="Léa Millet, psychologue clinicienne D.E" loading="lazy" width="291" height="418" />
       </figure>
 
-      <div class="pres-quote">
-        <div class="pres-quote-scribble"><Scribble variant="sparkle" width={40} /></div>
+      <div class="pres-quote reveal reveal-right">
+        <div class="pres-quote-scribble" data-parallax="0.05"><Scribble variant="sparkle" width={40} /></div>
         <p>
           Je suis convaincue de l'importance d'un accompagnement précoce et individualisé&nbsp;:
           je m'engage à soutenir chaque enfant et sa famille avec

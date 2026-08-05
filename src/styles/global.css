@@ -82,24 +82,57 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════
-   SCROLL REVEAL — fondu montant discret
+   SCROLL PROGRESS BAR
+═══════════════════════════════════════════════════ */
+#scroll-progress {
+  position: fixed; top: 0; left: 0;
+  height: 3px; width: 0%;
+  z-index: 2000;
+  background: linear-gradient(90deg, #93ab82 0%, #a9c69c 45%, #e087a0 100%);
+  box-shadow: 0 0 8px rgba(224, 135, 160, 0.45);
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════
+   SCROLL REVEAL — fondu + variantes directionnelles
 ═══════════════════════════════════════════════════ */
 .reveal {
   opacity: 0;
-  transform: translateY(26px);
+  transform: translateY(34px);
   transition:
-    opacity   0.7s var(--expo-out),
-    transform 0.7s var(--expo-out);
+    opacity   0.75s var(--expo-out),
+    transform 0.85s var(--expo-out);
+  transition-delay: var(--rd, 0s);
+  will-change: opacity, transform;
 }
-.reveal.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-.reveal-delay-1 { transition-delay: 0.10s; }
-.reveal-delay-2 { transition-delay: 0.20s; }
-.reveal-delay-3 { transition-delay: 0.30s; }
+.reveal.show { opacity: 1; transform: none; }
+
+.reveal-left  { transform: translateX(-48px); }
+.reveal-right { transform: translateX(48px); }
+.reveal-scale { transform: translateY(26px) scale(0.9); }
+.reveal-zoom  { transform: scale(0.88); }
+
+.reveal-delay-1 { --rd: 0.10s; }
+.reveal-delay-2 { --rd: 0.20s; }
+.reveal-delay-3 { --rd: 0.30s; }
+
+/* ═══════════════════════════════════════════════════
+   PARALLAX — via la propriété `translate` (compose avec transform:rotate)
+═══════════════════════════════════════════════════ */
+[data-parallax] { will-change: transform; }
+
+/* ═══════════════════════════════════════════════════
+   NAV — état compacté au scroll
+═══════════════════════════════════════════════════ */
+.nav { transition: background 0.35s ease, box-shadow 0.35s ease; }
+.nav-inner { transition: height 0.35s var(--expo-out); }
+.nav.scrolled { background: rgba(213, 230, 204, 0.95); box-shadow: 0 6px 22px rgba(60, 80, 55, 0.13); }
+.nav.scrolled .nav-inner { height: 54px; }
+
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none; }
+  [data-parallax] { translate: none !important; }
 }
 
 /* ═══════════════════════════════════════════════════

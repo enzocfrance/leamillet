@@ -4,8 +4,8 @@ import Scribble from './Scribble.astro';
 ---
 <section id="accueil" class="section hero">
   <!-- petits accents décoratifs -->
-  <div class="hero-scribble hero-scribble-1"><Scribble variant="sparkle" width={54} /></div>
-  <div class="hero-scribble hero-scribble-2"><Scribble variant="swoosh" width={120} /></div>
+  <div class="hero-scribble hero-scribble-1" data-parallax="0.08"><Scribble variant="sparkle" width={54} /></div>
+  <div class="hero-scribble hero-scribble-2" data-parallax="-0.06"><Scribble variant="swoosh" width={120} /></div>
 
   <div class="section-inner hero-inner">
 
@@ -16,7 +16,7 @@ import Scribble from './Scribble.astro';
       du neurodéveloppement chez l'enfant — D.E
     </p>
 
-    <div class="hero-mascot reveal reveal-delay-2">
+    <div class="hero-mascot reveal reveal-delay-2" data-parallax="0.12">
       <Mascot size={150} />
     </div>
 

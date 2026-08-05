@@ -18,9 +18,9 @@ const photos = [
       <Scribble variant="underline" width={150} stroke="#2b342d" />
     </div>
 
-    <div class="cabinet-gallery">
-      {photos.map((p, i) => (
-        <figure class={`cabinet-photo reveal reveal-delay-${i + 1}`}>
+    <div class="cabinet-gallery" data-stagger="140">
+      {photos.map((p) => (
+        <figure class="cabinet-photo reveal-scale">
           <img src={p.src} alt={p.alt} loading="lazy" />
         </figure>
       ))}

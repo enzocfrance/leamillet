@@ -27,7 +27,7 @@ const bilan = [
 ];
 ---
 <section id="pratique" class="section pratique">
-  <div class="prat-scribble prat-scribble-1"><Scribble variant="sparkle" width={50} /></div>
+  <div class="prat-scribble prat-scribble-1" data-parallax="-0.08"><Scribble variant="sparkle" width={50} /></div>
 
   <div class="section-inner">
 
@@ -40,7 +40,7 @@ const bilan = [
           difficultés&nbsp;:
         </p>
       </div>
-      <ul class="prat-chips">
+      <ul class="prat-chips" data-stagger="65">
         {difficultes.map(d => <li class="prat-chip">{d}</li>)}
       </ul>
     </div>
@@ -48,7 +48,7 @@ const bilan = [
     <!-- Déroulés -->
     <div class="prat-cols">
 
-      <article class="prat-col reveal">
+      <article class="prat-col reveal reveal-left">
         <div class="prat-col-head">
           <div class="prat-col-mascot"><Mascot size={58} float={false} /></div>
           <h3 class="prat-col-title">Le déroulement du suivi<br/>et des consultations</h3>
@@ -58,7 +58,7 @@ const bilan = [
         </ol>
       </article>
 
-      <article class="prat-col reveal reveal-delay-1">
+      <article class="prat-col reveal reveal-right">
         <div class="prat-col-head">
           <div class="prat-col-mascot"><Mascot size={58} float={false} /></div>
           <h3 class="prat-col-title">Pour les bilans<br/>neuropsychologiques</h3>

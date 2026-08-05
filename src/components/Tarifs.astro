@@ -18,7 +18,7 @@ const bilans = [
 ];
 ---
 <section id="tarification" class="section tarification">
-  <div class="tarif-mascot"><Mascot size={64} /></div>
+  <div class="tarif-mascot" data-parallax="0.1"><Mascot size={64} /></div>
 
   <div class="section-inner">
 
@@ -27,7 +27,7 @@ const bilans = [
 
     <!-- Consultations -->
     <div class="tarif-card reveal">
-      <ul class="tarif-list">
+      <ul class="tarif-list" data-stagger="70">
         {consultations.map(c => (
           <li class="tarif-row">
             <span class="tarif-row-label">
@@ -47,7 +47,7 @@ const bilans = [
     </p>
 
     <div class="tarif-card reveal">
-      <ul class="tarif-list">
+      <ul class="tarif-list" data-stagger="70">
         {bilans.map(b => (
           <li class="tarif-row tarif-row--bilan">
             <span class="tarif-price tarif-price--lead">{b.price}</span>
