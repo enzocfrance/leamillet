@@ -1,0 +1,19 @@
+---
+/* Transition organique entre deux sections (courbe remplie de la couleur suivante). */
+interface Props {
+  color: string;       // couleur de la section SUIVANTE
+  variant?: 1 | 2 | 3;
+}
+const { color, variant = 1 } = Astro.props;
+
+const paths: Record<number, string> = {
+  1: 'M0,64 C240,10 480,96 720,72 C960,48 1200,4 1440,40 L1440,120 L0,120 Z',
+  2: 'M0,40 C300,110 560,20 820,58 C1080,96 1260,44 1440,76 L1440,120 L0,120 Z',
+  3: 'M0,80 C220,30 520,88 760,60 C1040,28 1240,92 1440,52 L1440,120 L0,120 Z',
+};
+---
+<div class="divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d={paths[variant]} fill={color} />
+  </svg>
+</div>

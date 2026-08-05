@@ -1,19 +1,25 @@
 ---
 import Mascot from './Mascot.astro';
-interface Props {
-  isHome?: boolean;
-}
+interface Props { isHome?: boolean; }
 const { isHome = true } = Astro.props;
 const topHref = isHome ? '#accueil' : '/';
 ---
 <footer class="footer">
-  <div class="footer-soon" data-stagger="90">
-    <div class="footer-soon-mascot" data-parallax="0.07"><Mascot size={58} /></div>
-    <p class="footer-soon-badge">🌿 Prochainement</p>
-    <p class="footer-soon-line">Prochainement à <strong>Saint-Chamas</strong></p>
-    <p class="footer-soon-line">
-      Ouverture de <strong>groupes d'habiletés sociales</strong> à <strong>Salon-de-Provence</strong>
-    </p>
+  <div class="footer-soon-wrap">
+    <div class="footer-soon card reveal">
+      <div class="footer-soon-mascot" data-parallax="0.06"><Mascot size={54} /></div>
+      <span class="eyebrow eyebrow--center">Prochainement</span>
+      <div class="footer-soon-items">
+        <div class="footer-soon-item">
+          <span class="footer-pin" aria-hidden="true">📍</span>
+          <span>Nouvelle permanence à <strong>Saint-Chamas</strong></span>
+        </div>
+        <div class="footer-soon-item">
+          <span class="footer-pin" aria-hidden="true">🤝</span>
+          <span>Groupes d'<strong>habiletés sociales</strong> à <strong>Salon-de-Provence</strong></span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="footer-bar">
@@ -22,77 +28,45 @@ const topHref = isHome ? '#accueil' : '/';
     </a>
     <p class="footer-name">Millet Léa</p>
     <p class="footer-role">Psychologue clinicienne D.E — Autisme &amp; neurodéveloppement</p>
-    <p class="footer-legal">
-      Tous droits réservés&nbsp;·&nbsp;
-      <a href="/mentions">Mentions légales</a>
-    </p>
-    <p class="footer-credit">
-      Site réalisé par
-      <a href="mailto:enzo.chamanier.pro@gmail.com">Enzo Chamanier</a>
-    </p>
+    <p class="footer-legal">Tous droits réservés&nbsp;·&nbsp;<a href="/mentions">Mentions légales</a></p>
+    <p class="footer-credit">Site réalisé par <a href="mailto:enzo.chamanier.pro@gmail.com">Enzo Chamanier</a></p>
   </div>
 </footer>
 
 <style>
   .footer { background: #d7e6cc; }
 
+  .footer-soon-wrap { padding: clamp(2.5rem, 6vw, 4rem) 1.25rem; }
   .footer-soon {
+    max-width: 620px; margin: 0 auto;
     text-align: center;
-    padding: 3rem 1.25rem 2.4rem;
-    border-top: 1px solid rgba(147, 171, 130, 0.3);
+    padding: clamp(1.8rem, 4vw, 2.6rem);
+    display: flex; flex-direction: column; align-items: center; gap: 0.9rem;
   }
-  .footer-soon-mascot { display: inline-block; line-height: 0; margin-bottom: 0.9rem; opacity: 0.9; }
-  .footer-soon-badge {
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 600;
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #6f8064;
-    margin-bottom: 0.7rem;
+  .footer-soon-mascot { line-height: 0; }
+  .footer-soon-items { display: flex; flex-direction: column; gap: 0.7rem; width: 100%; margin-top: 0.2rem; }
+  .footer-soon-item {
+    display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+    font-family: 'Quicksand', sans-serif; font-weight: 500; font-size: 0.95rem;
+    color: #3d4a3a; line-height: 1.5;
+    background: rgba(168, 200, 147, 0.14);
+    border-radius: 14px; padding: 0.7rem 1rem;
   }
-  .footer-soon-line {
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 500;
-    font-size: clamp(0.95rem, 2.2vw, 1.1rem);
-    color: #2b342d;
-    line-height: 1.6;
-  }
-  .footer-soon-line strong { font-weight: 700; color: #24422a; }
+  .footer-soon-item strong { color: #2f5a3a; font-weight: 700; }
+  .footer-pin { font-size: 1.05rem; flex-shrink: 0; }
 
-  .footer-bar {
-    text-align: center;
-    padding: 2rem 1.25rem 2.6rem;
-    background: #93ab82;
-  }
+  .footer-bar { text-align: center; padding: 2.2rem 1.25rem 2.8rem; background: linear-gradient(180deg, #93ab82, #85a074); }
   .footer-top {
-    display: inline-flex;
-    align-items: center; justify-content: center;
-    width: 42px; height: 42px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    color: #fff;
-    margin-bottom: 1rem;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3); color: #fff; margin-bottom: 1rem;
     transition: transform 0.3s var(--spring), background 0.3s ease;
   }
-  .footer-top:hover { transform: translateY(-3px); background: rgba(255,255,255,0.5); }
-  .footer-name {
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
-    letter-spacing: 0.04em;
-    color: #fff;
-    margin-bottom: 4px;
-  }
-  .footer-role {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.78rem;
-    font-style: italic;
-    color: rgba(255, 255, 255, 0.85);
-    margin-bottom: 0.9rem;
-  }
-  .footer-legal { font-size: 0.75rem; color: rgba(255, 255, 255, 0.85); }
+  .footer-top:hover { transform: translateY(-3px); background: rgba(255, 255, 255, 0.55); }
+  .footer-name { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 1.15rem; letter-spacing: 0.03em; color: #fff; margin-bottom: 4px; }
+  .footer-role { font-family: 'Montserrat', sans-serif; font-size: 0.78rem; font-style: italic; color: rgba(255, 255, 255, 0.88); margin-bottom: 0.9rem; }
+  .footer-legal { font-size: 0.75rem; color: rgba(255, 255, 255, 0.88); }
   .footer-legal a { color: #fff; text-decoration: underline; text-underline-offset: 2px; }
-  .footer-credit { margin-top: 0.6rem; font-size: 0.68rem; color: rgba(255, 255, 255, 0.6); }
+  .footer-credit { margin-top: 0.6rem; font-size: 0.68rem; color: rgba(255, 255, 255, 0.62); }
   .footer-credit a { color: inherit; text-decoration: none; }
 </style>

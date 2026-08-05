@@ -1,0 +1,32 @@
+---
+interface Props {
+  eyebrow?: string;
+  align?: 'center' | 'left';
+  light?: boolean;
+  class?: string;
+}
+const { eyebrow, align = 'center', light = false, class: klass = '' } = Astro.props;
+const hasLead = Astro.slots.has('lead');
+---
+<div class:list={['sh', `sh--${align}`, klass]}>
+  {eyebrow && (
+    <span class:list={['eyebrow', { 'eyebrow--center': align === 'center', 'eyebrow--on-dark': light }]}>{eyebrow}</span>
+  )}
+  <h2 class:list={['h2', { 'h2--light': light }]}><slot /></h2>
+  {hasLead && <p class:list={['sh-lead', { 'sh-lead--light': light }]}><slot name="lead" /></p>}
+</div>
+
+<style>
+  .sh { display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 2.6rem; }
+  .sh--center { align-items: center; text-align: center; }
+  .sh--left { align-items: flex-start; text-align: left; }
+  .sh-lead {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(0.92rem, 2vw, 1.02rem);
+    line-height: 1.8;
+    color: #566766;
+    max-width: 580px;
+  }
+  .sh--center .sh-lead { margin-left: auto; margin-right: auto; }
+  .sh-lead--light { color: rgba(255, 255, 255, 0.9); }
+</style>

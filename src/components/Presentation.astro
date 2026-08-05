@@ -1,122 +1,170 @@
 ---
-import Mascot from './Mascot.astro';
+import SectionHeading from './SectionHeading.astro';
+import Divider from './Divider.astro';
 import Scribble from './Scribble.astro';
+
+const credentials = [
+  { icon: '🎓', label: 'Master Autisme & TND' },
+  { icon: '🌱', label: "Formée à l'ESDM" },
+  { icon: '🧩', label: 'Intervention précoce' },
+  { icon: '🏫', label: 'UEMA & hôpital de jour' },
+];
 ---
 <section id="presentation" class="section presentation">
-  <div class="pres-mascot pres-mascot-1" data-parallax="0.09"><Mascot size={64} /></div>
-  <div class="pres-scribble pres-scribble-1" data-parallax="-0.07"><Scribble variant="sparkle" width={46} /></div>
+  <span class="blob pres-blob-1" aria-hidden="true"></span>
+  <span class="blob pres-blob-2" aria-hidden="true"></span>
+  <div class="dotgrid pres-dots" aria-hidden="true"></div>
 
-  <div class="section-inner pres-inner">
+  <div class="section-inner">
+    <SectionHeading eyebrow="Présentation" light>
+      Faire <span class="mark">connaissance</span>
+      <Fragment slot="lead">Psychologue clinicienne D.E, diplômée depuis 2022.</Fragment>
+    </SectionHeading>
 
-    <div class="pres-text">
-      <p class="reveal">
-        Psychologue diplômée depuis 2022. Titulaire d'un master spécialisé dans l'autisme et les
-        troubles du neurodéveloppement, j'ai été formée à l'évaluation psychologique et
-        neuropsychologique pour l'utilisation des tests psychométriques. Mon approche est
-        principalement orientée vers les <strong>thérapies cognitives et comportementales (TCC)</strong>
-        et s'appuie sur des modèles d'intervention recommandés tels que l'<strong>ABA</strong>, le
-        programme <strong>TEACCH</strong> et le modèle de <strong>Denver (ESDM)</strong>.
-      </p>
-      <p class="reveal reveal-delay-1">
-        Mon expérience professionnelle comprend un travail en Unité d'enseignement maternelle autisme
-        (UEMA), au sein d'une équipe pluridisciplinaire en collaboration avec un établissement
-        scolaire, ainsi qu'en hôpital de jour, service de pédopsychiatrie. J'interviens également dans
-        des actions de sensibilisation et dans la supervision auprès de professionnels de la petite
-        enfance.
-      </p>
-      <p class="reveal reveal-delay-2">
-        Dans ma pratique, j'accorde une importance particulière à l'écoute, à l'adaptation des
-        accompagnements aux besoins de chaque enfant et à la collaboration avec les familles et les
-        différents professionnels qui l'entourent.
-      </p>
-    </div>
+    <div class="pres-grid">
 
-    <!-- Photo + citation -->
-    <div class="pres-profile">
-      <figure class="pres-photo reveal reveal-left">
-        <img src="/pictures/lea-photo.png" alt="Léa Millet, psychologue clinicienne D.E" loading="lazy" width="291" height="418" />
-      </figure>
+      <!-- Carte photo -->
+      <aside class="pres-photocard reveal reveal-left">
+        <figure class="pres-frame">
+          <img src="/pictures/lea-photo.png" alt="Léa Millet, psychologue clinicienne D.E" loading="lazy" width="291" height="418" />
+          <figcaption class="pres-tag">
+            <span class="pres-tag-name">Léa Millet</span>
+            <span class="pres-tag-role">Psychologue D.E</span>
+          </figcaption>
+        </figure>
+        <ul class="pres-creds">
+          {credentials.map(c => (
+            <li class="pres-cred"><span aria-hidden="true">{c.icon}</span>{c.label}</li>
+          ))}
+        </ul>
+      </aside>
 
-      <div class="pres-quote reveal reveal-right">
-        <div class="pres-quote-scribble" data-parallax="0.05"><Scribble variant="sparkle" width={40} /></div>
+      <!-- Bio -->
+      <div class="pres-bio card reveal reveal-right">
+        <div class="pres-scribble" data-parallax="0.05"><Scribble variant="sparkle" width={42} /></div>
         <p>
+          Titulaire d'un master spécialisé dans l'autisme et les troubles du neurodéveloppement,
+          j'ai été formée à l'évaluation psychologique et neuropsychologique. Mon approche est
+          orientée vers les <strong>thérapies cognitives et comportementales (TCC)</strong> et
+          s'appuie sur des modèles reconnus&nbsp;: <strong>ABA</strong>, <strong>TEACCH</strong>
+          et le modèle de <strong>Denver (ESDM)</strong>.
+        </p>
+        <p>
+          Mon expérience comprend un travail en <strong>Unité d'enseignement maternelle autisme
+          (UEMA)</strong>, en équipe pluridisciplinaire avec un établissement scolaire, ainsi qu'en
+          hôpital de jour (pédopsychiatrie). J'interviens aussi en sensibilisation et en supervision
+          auprès de professionnels de la petite enfance.
+        </p>
+
+        <blockquote class="pres-quote">
           Je suis convaincue de l'importance d'un accompagnement précoce et individualisé&nbsp;:
           je m'engage à soutenir chaque enfant et sa famille avec
           <strong>bienveillance, rigueur et respect de leur singularité.</strong>
-        </p>
+          <cite>Léa Millet</cite>
+        </blockquote>
       </div>
-    </div>
 
+    </div>
   </div>
+
+  <Divider color="#c6dbba" variant={2} />
 </section>
 
 <style>
   .presentation {
-    background: #a9c69c;
-    color: #2f3a2c;
+    background: linear-gradient(180deg, #a9c69c 0%, #9dbd8f 100%);
+    padding-bottom: clamp(5rem, 9vw, 8rem);
   }
-  .pres-inner { max-width: 860px; }
+  .pres-blob-1 { width: 380px; height: 380px; top: 4%; left: -8%; background: radial-gradient(circle, rgba(255,255,255,0.5), transparent 70%); }
+  .pres-blob-2 { width: 340px; height: 340px; bottom: 6%; right: -6%; background: radial-gradient(circle, rgba(240,163,184,0.28), transparent 70%); }
+  .pres-dots { width: 130px; height: 130px; top: 18%; right: 5%; }
 
-  .pres-text p {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-    font-size: clamp(0.9rem, 2vw, 1.02rem);
-    line-height: 1.95;
-    color: #2f3a2c;
-    text-align: center;
-    max-width: 720px;
-    margin: 0 auto 1.5rem;
-  }
-  .pres-text strong { font-weight: 600; color: #24422a; }
-
-  /* Photo + citation */
-  .pres-profile {
+  .pres-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2rem;
-    align-items: center;
-    margin-top: 2.5rem;
+    gap: 1.8rem;
+    align-items: start;
   }
-  @media (min-width: 760px) {
-    .pres-profile { grid-template-columns: 260px 1fr; gap: 2.5rem; }
+  @media (min-width: 900px) {
+    .pres-grid { grid-template-columns: 300px 1fr; gap: 2.6rem; }
   }
 
-  .pres-photo { margin: 0; }
-  .pres-photo img {
-    display: block;
-    width: 100%;
+  /* Carte photo */
+  .pres-photocard { display: flex; flex-direction: column; gap: 1.1rem; }
+  @media (min-width: 900px) { .pres-photocard { position: sticky; top: 88px; } }
+
+  .pres-frame {
+    position: relative;
+    margin: 0;
+    border-radius: 22px;
+    padding: 7px;
+    background: linear-gradient(150deg, #fbfdf7, #e7f0dd);
+    box-shadow: 0 26px 50px -24px rgba(47, 74, 44, 0.5);
+  }
+  .pres-frame img {
+    display: block; width: 100%;
     aspect-ratio: 291 / 418;
     object-fit: cover;
-    border-radius: 18px;
-    background: #eef4e8;
-    padding: 5px;
-    box-shadow: 0 14px 34px rgba(60, 80, 55, 0.2);
+    border-radius: 16px;
   }
+  .pres-tag {
+    position: absolute;
+    left: 16px; bottom: 16px;
+    display: flex; flex-direction: column;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    padding: 0.5rem 0.85rem;
+    box-shadow: 0 10px 24px -12px rgba(47, 74, 44, 0.5);
+  }
+  .pres-tag-name { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.92rem; color: #2b342d; }
+  .pres-tag-role { font-family: 'Montserrat', sans-serif; font-size: 0.72rem; color: #6f8064; }
 
-  .pres-quote { position: relative; }
-  .pres-quote p {
+  .pres-creds { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  @media (min-width: 900px) { .pres-creds { grid-template-columns: 1fr; } }
+  .pres-cred {
+    display: flex; align-items: center; gap: 0.55rem;
+    font-family: 'Montserrat', sans-serif; font-size: 0.8rem; line-height: 1.3;
+    color: #2f3f27;
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 12px;
+    padding: 0.55rem 0.75rem;
+  }
+  .pres-cred span { font-size: 1rem; }
+
+  /* Bio */
+  .pres-bio { position: relative; padding: clamp(1.6rem, 3vw, 2.5rem); }
+  .pres-scribble { position: absolute; top: -20px; right: 24px; line-height: 0; }
+  .pres-bio p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.96rem; line-height: 1.9; color: #45564a;
+    margin-bottom: 1.2rem;
+  }
+  .pres-bio strong { font-weight: 600; color: #2f5a3a; }
+
+  .pres-quote {
+    position: relative;
+    margin: 1.4rem 0 0;
+    padding: 1.3rem 1.4rem 1.3rem 2.6rem;
+    background: linear-gradient(135deg, rgba(168,200,147,0.18), rgba(240,163,184,0.12));
+    border-left: 4px solid #93ab82;
+    border-radius: 0 16px 16px 0;
     font-family: 'Quicksand', sans-serif;
     font-weight: 500;
-    font-size: clamp(1rem, 2.3vw, 1.2rem);
-    line-height: 1.7;
-    color: #24422a;
-    text-align: center;
+    font-size: 1rem; line-height: 1.65; color: #2f4a2c;
   }
-  @media (min-width: 760px) {
-    .pres-quote p { text-align: left; }
+  .pres-quote::before {
+    content: '\201C';
+    position: absolute; left: 0.7rem; top: 0.3rem;
+    font-family: Georgia, serif; font-size: 2.6rem; line-height: 1;
+    color: rgba(127, 154, 111, 0.5);
   }
-  .pres-quote strong { font-weight: 700; color: #1d331f; }
-  .pres-quote-scribble { position: absolute; top: -28px; right: 8%; transform: rotate(8deg); }
-
-  /* mascottes + accents */
-  .pres-mascot { position: absolute; opacity: 0.95; line-height: 0; }
-  .pres-mascot-1 { top: 32%; left: 4%; }
-  .pres-scribble { position: absolute; line-height: 0; }
-  .pres-scribble-1 { top: 10%; right: 8%; transform: rotate(-10deg); }
-  .pres-quote-scribble { line-height: 0; }
-
-  @media (max-width: 760px) {
-    .pres-mascot-1 { display: none; }
-    .pres-photo { max-width: 240px; margin: 0 auto; }
+  .pres-quote strong { color: #1f3a1f; font-weight: 700; }
+  .pres-quote cite {
+    display: block; margin-top: 0.7rem;
+    font-family: 'Quicksand', sans-serif; font-style: normal; font-weight: 700;
+    font-size: 0.82rem; letter-spacing: 0.04em; color: #6a7d5e;
   }
+  .pres-quote cite::before { content: '— '; }
 </style>

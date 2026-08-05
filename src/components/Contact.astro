@@ -1,142 +1,92 @@
 ---
-import Scribble from './Scribble.astro';
+import SectionHeading from './SectionHeading.astro';
+import Divider from './Divider.astro';
 
 const infos = [
-  {
-    label: 'Téléphone',
-    value: '06 16 03 75 37',
-    href: 'tel:+33616037537',
-    icon: `<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>`,
-  },
-  {
-    label: 'Email',
-    value: 'lea.millet.psy13@gmail.com',
-    href: 'mailto:lea.millet.psy13@gmail.com',
-    icon: `<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>`,
-  },
-  {
-    label: 'Adresse',
-    value: '34 avenue du Maréchal Juin, Miramas',
-    href: 'https://maps.google.com/maps?q=34+avenue+du+Mar%C3%A9chal+Juin+Miramas',
-    icon: `<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>`,
-  },
-  {
-    label: 'Ouverture',
-    value: 'Le mercredi et le vendredi',
-    href: null,
-    icon: `<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>`,
-  },
+  { label: 'Téléphone', value: '06 16 03 75 37', href: 'tel:+33616037537',
+    icon: `<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>` },
+  { label: 'Email', value: 'lea.millet.psy13@gmail.com', href: 'mailto:lea.millet.psy13@gmail.com',
+    icon: `<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>` },
+  { label: 'Adresse', value: '34 avenue du Maréchal Juin, Miramas', href: 'https://maps.google.com/maps?q=34+avenue+du+Mar%C3%A9chal+Juin+Miramas',
+    icon: `<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>` },
+  { label: 'Ouverture', value: 'Le mercredi et le vendredi', href: null,
+    icon: `<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>` },
 ];
 ---
 <section id="contact" class="section contact">
+  <span class="blob con-blob-1" aria-hidden="true"></span>
+  <span class="blob con-blob-2" aria-hidden="true"></span>
+
   <div class="section-inner">
+    <SectionHeading eyebrow="Contact">
+      Prendre <span class="mark">rendez-vous</span>
+      <Fragment slot="lead">N'hésitez pas à me contacter&nbsp;: je vous répondrai avec plaisir.</Fragment>
+    </SectionHeading>
 
-    <h2 class="sec-title reveal">Contact</h2>
-    <div class="contact-scribble reveal"><Scribble variant="underline" width={130} /></div>
-
-    <div class="contact-grid">
-      <div class="contact-card reveal reveal-left">
-        <ul class="contact-list">
-          {infos.map(info => (
-            <li class="contact-item">
-              <span class="contact-icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={info.icon}></svg>
-              </span>
-              <span class="contact-text">
-                <span class="contact-label">{info.label}</span>
-                {info.href
-                  ? <a href={info.href} class="contact-value" target={info.href.startsWith('http') ? '_blank' : undefined} rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}>{info.value}</a>
-                  : <span class="contact-value">{info.value}</span>}
-              </span>
-            </li>
-          ))}
-        </ul>
-
-        <a href="tel:+33616037537" class="btn-soft contact-cta">Prendre contact</a>
+    <div class="con-grid">
+      <div class="con-info reveal reveal-left">
+        {infos.map(info => (
+          info.href ? (
+            <a class="con-item card card--hover" href={info.href} target={info.href.startsWith('http') ? '_blank' : undefined} rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+              <span class="con-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={info.icon}></svg></span>
+              <span class="con-text"><span class="con-label">{info.label}</span><span class="con-value">{info.value}</span></span>
+            </a>
+          ) : (
+            <div class="con-item card">
+              <span class="con-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={info.icon}></svg></span>
+              <span class="con-text"><span class="con-label">{info.label}</span><span class="con-value">{info.value}</span></span>
+            </div>
+          )
+        ))}
+        <a href="tel:+33616037537" class="btn btn-green con-cta">Appeler le cabinet</a>
       </div>
 
-      <div class="contact-map reveal reveal-right">
+      <div class="con-map reveal reveal-right">
         <iframe
           src="https://maps.google.com/maps?q=34%20avenue%20du%20Mar%C3%A9chal%20Juin%20Miramas&z=14&output=embed"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          title="Localisation du cabinet — 34 avenue du Maréchal Juin, Miramas"
-        ></iframe>
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          title="Localisation du cabinet — 34 avenue du Maréchal Juin, Miramas"></iframe>
       </div>
     </div>
-
   </div>
+
+  <Divider color="#d7e6cc" variant={3} />
 </section>
 
 <style>
-  .contact { background: #c6dbba; }
-  .contact-scribble { display: flex; justify-content: center; margin: 0.3rem 0 2.4rem; line-height: 0; }
+  .contact {
+    background: linear-gradient(180deg, #c6dbba 0%, #d3e3c8 100%);
+    padding-bottom: clamp(5rem, 9vw, 8rem);
+  }
+  .con-blob-1 { width: 360px; height: 360px; top: 8%; left: -8%; background: radial-gradient(circle, rgba(255,255,255,0.55), transparent 70%); }
+  .con-blob-2 { width: 320px; height: 320px; bottom: 6%; right: -6%; background: radial-gradient(circle, rgba(240,163,184,0.24), transparent 70%); }
 
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    align-items: stretch;
-    max-width: 860px;
-    margin: 0 auto;
-  }
-  @media (min-width: 820px) {
-    .contact-grid { grid-template-columns: 1fr 1fr; }
-  }
+  .con-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; align-items: stretch; }
+  @media (min-width: 860px) { .con-grid { grid-template-columns: 1fr 1.05fr; } }
 
-  .contact-card {
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.75);
-    border-radius: 22px;
-    padding: 1.8rem 1.6rem;
-    box-shadow: 0 14px 34px rgba(60, 80, 55, 0.12);
-    display: flex;
-    flex-direction: column;
-  }
-  .contact-list { list-style: none; display: flex; flex-direction: column; gap: 1.1rem; }
-  .contact-item { display: flex; align-items: center; gap: 0.9rem; }
-  .contact-icon {
-    flex-shrink: 0;
-    width: 40px; height: 40px;
-    border-radius: 12px;
-    background: #93ab82;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 5px 14px rgba(127, 154, 111, 0.35);
-  }
-  .contact-text { display: flex; flex-direction: column; min-width: 0; }
-  .contact-label {
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 600;
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #6f8064;
-  }
-  .contact-value {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: #2b342d;
+  .con-info { display: flex; flex-direction: column; gap: 0.85rem; }
+  .con-item {
+    display: flex; align-items: center; gap: 0.9rem;
+    padding: 0.95rem 1.1rem;
     text-decoration: none;
-    word-break: break-word;
   }
-  a.contact-value:hover { color: #e087a0; }
-  .contact-cta { align-self: flex-start; margin-top: 1.6rem; }
+  .con-icon {
+    flex-shrink: 0; width: 42px; height: 42px; border-radius: 13px;
+    display: grid; place-items: center;
+    background: linear-gradient(135deg, #a9c69c, #7f9a6f);
+    box-shadow: 0 6px 14px -6px rgba(127, 154, 111, 0.6);
+  }
+  a.con-item:hover .con-icon { background: linear-gradient(135deg, #f3aabc, #e087a0); box-shadow: 0 6px 14px -6px rgba(224,135,160,0.6); }
+  .con-text { display: flex; flex-direction: column; min-width: 0; }
+  .con-label { font-family: 'Quicksand', sans-serif; font-weight: 600; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: #6f8064; }
+  .con-value { font-family: 'Montserrat', sans-serif; font-size: 0.92rem; font-weight: 500; color: #2b342d; word-break: break-word; }
+  .con-cta { margin-top: 0.4rem; align-self: flex-start; }
 
-  .contact-map {
-    border-radius: 22px;
-    overflow: hidden;
-    padding: 4px;
-    background: linear-gradient(135deg, #93ab82, #a9c69c, #e087a0);
-    box-shadow: 0 14px 34px rgba(60, 80, 55, 0.18);
-    min-height: 280px;
+  .con-map {
+    border-radius: 22px; overflow: hidden; padding: 5px;
+    background: linear-gradient(135deg, #93ab82, #a9c69c 55%, #e087a0);
+    box-shadow: 0 22px 44px -22px rgba(47, 74, 44, 0.5);
+    min-height: 320px;
   }
-  .contact-map iframe {
-    display: block;
-    width: 100%;
-    height: 100%;
-    min-height: 272px;
-    border: none;
-    border-radius: 18px;
-  }
+  .con-map iframe { display: block; width: 100%; height: 100%; min-height: 310px; border: none; border-radius: 18px; }
 </style>
