@@ -47,7 +47,7 @@ const topHref = isHome ? '#accueil' : '/';
   .footer-soon-items { display: flex; flex-direction: column; gap: 0.7rem; width: 100%; margin-top: 0.2rem; }
   .footer-soon-item {
     display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-    font-family: 'Quicksand', sans-serif; font-weight: 500; font-size: 0.95rem;
+    font-family: var(--font-display); font-weight: 500; font-size: 0.95rem;
     color: #3d4a3a; line-height: 1.5;
     background: rgba(168, 200, 147, 0.14);
     border-radius: 14px; padding: 0.7rem 1rem;
@@ -63,8 +63,8 @@ const topHref = isHome ? '#accueil' : '/';
     transition: transform 0.3s var(--spring), background 0.3s ease;
   }
   .footer-top:hover { transform: translateY(-3px); background: rgba(255, 255, 255, 0.55); }
-  .footer-name { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 1.15rem; letter-spacing: 0.03em; color: #fff; margin-bottom: 4px; }
-  .footer-role { font-family: 'Montserrat', sans-serif; font-size: 0.78rem; font-style: italic; color: rgba(255, 255, 255, 0.88); margin-bottom: 0.9rem; }
+  .footer-name { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; letter-spacing: 0.03em; color: #fff; margin-bottom: 4px; }
+  .footer-role { font-family: var(--font-body); font-size: 0.78rem; font-style: italic; color: rgba(255, 255, 255, 0.88); margin-bottom: 0.9rem; }
   .footer-legal { font-size: 0.75rem; color: rgba(255, 255, 255, 0.88); }
   .footer-legal a { color: #fff; text-decoration: underline; text-underline-offset: 2px; }
   .footer-credit { margin-top: 0.6rem; font-size: 0.68rem; color: rgba(255, 255, 255, 0.62); }

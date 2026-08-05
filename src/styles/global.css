@@ -9,6 +9,11 @@
   --spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
   --expo-out:  cubic-bezier(0.16, 1, 0.3, 1);
 
+  /* Typographie — identité */
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body:    'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+  --font-hand:    'Caveat', 'Segoe Script', cursive;
+
   --sage-100:  #d7e6cc;
   --sage-200:  #c6dbba;
   --sage-300:  #a9c69c;
@@ -32,12 +37,14 @@ html {
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  position: relative;
+  font-family: var(--font-body);
   color: var(--ink);
   background: #d7e6cc;
   opacity: 0;
   animation: page-in 0.7s var(--expo-out) forwards;
   -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.005em;
 }
 @keyframes page-in { to { opacity: 1; } }
 
@@ -64,7 +71,7 @@ body {
 
 /* Titre de section (doux, arrondi) */
 .sec-title {
-  font-family: 'Quicksand', sans-serif;
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: clamp(1.5rem, 4vw, 2.2rem);
   letter-spacing: 0.02em;
@@ -73,7 +80,7 @@ body {
   line-height: 1.2;
 }
 .sec-lead {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-body);
   font-weight: 400;
   font-size: clamp(0.92rem, 2vw, 1.05rem);
   line-height: 1.9;
@@ -97,25 +104,12 @@ body {
 /* ═══════════════════════════════════════════════════
    SCROLL REVEAL — fondu + variantes directionnelles
 ═══════════════════════════════════════════════════ */
-.reveal {
-  opacity: 0;
-  transform: translateY(34px);
-  transition:
-    opacity   0.75s var(--expo-out),
-    transform 0.85s var(--expo-out);
-  transition-delay: var(--rd, 0s);
-  will-change: opacity, transform;
-}
-.reveal.show { opacity: 1; transform: none; }
-
-.reveal-left  { transform: translateX(-48px); }
-.reveal-right { transform: translateX(48px); }
-.reveal-scale { transform: translateY(26px) scale(0.9); }
-.reveal-zoom  { transform: scale(0.88); }
-
-.reveal-delay-1 { --rd: 0.10s; }
-.reveal-delay-2 { --rd: 0.20s; }
-.reveal-delay-3 { --rd: 0.30s; }
+/* Construction au scroll : quand JS est actif (html.anim), les éléments .reveal
+   sont pilotés image par image selon leur position (scrub). Sans JS ou en
+   reduced-motion, html.anim est absent → tout reste visible. */
+.anim .reveal { opacity: 0; will-change: opacity, transform; }
+.anim .scribble path { will-change: stroke-dashoffset; }
+.reveal-left, .reveal-right, .reveal-scale, .reveal-zoom { /* marqueurs lus par le moteur JS */ }
 
 /* ═══════════════════════════════════════════════════
    PARALLAX — via la propriété `translate` (compose avec transform:rotate)
@@ -181,7 +175,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: 'Quicksand', sans-serif;
+  font-family: var(--font-display);
   font-weight: 600;
   font-size: 0.9rem;
   letter-spacing: 0.02em;
@@ -229,7 +223,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  font-family: 'Quicksand', sans-serif;
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.72rem;
   letter-spacing: 0.18em;
@@ -248,7 +242,7 @@ body {
 
 /* ── Titre de section ── */
 .h2 {
-  font-family: 'Quicksand', sans-serif;
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: clamp(1.75rem, 4.4vw, 2.7rem);
   line-height: 1.12;
@@ -294,7 +288,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-family: 'Quicksand', sans-serif;
+  font-family: var(--font-display);
   font-weight: 600;
   font-size: 0.72rem;
   letter-spacing: 0.04em;
@@ -308,7 +302,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  font-family: 'Quicksand', sans-serif;
+  font-family: var(--font-display);
   font-weight: 600;
   font-size: 0.92rem;
   letter-spacing: 0.01em;
@@ -350,7 +344,7 @@ body {
   width: 2.2rem; height: 2.2rem;
   border-radius: 50%;
   display: grid; place-items: center;
-  font-family: 'Quicksand', sans-serif;
+  font-family: var(--font-display);
   font-weight: 700; font-size: 0.85rem;
   color: #fff;
   background: linear-gradient(135deg, #a9c69c, #7f9a6f);
@@ -360,7 +354,7 @@ body {
 .tl-node--pink { background: linear-gradient(135deg, #f3aabc, #e087a0); box-shadow: 0 6px 14px -6px rgba(224, 135, 160, 0.7); }
 .tl-body { padding-top: 0.25rem; }
 .tl-body h4 {
-  font-family: 'Quicksand', sans-serif;
+  font-family: var(--font-display);
   font-weight: 600;
   font-size: 0.95rem;
   color: #2f3a2c;
@@ -377,3 +371,63 @@ body {
   pointer-events: none;
 }
 .divider svg { display: block; width: 100%; height: clamp(40px, 6vw, 80px); }
+
+/* ═══════════════════════════════════════════════════════════════════
+   IDENTITÉ v3 — grain, fil conducteur, accents manuscrits, vie
+═══════════════════════════════════════════════════════════════════ */
+
+/* Grain papier (chaleur / texture) */
+#grain {
+  position: fixed; inset: 0;
+  z-index: 1200; pointer-events: none;
+  opacity: 0.05; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Fil conducteur qui se dessine + mascotte qui descend la page */
+#spine {
+  position: absolute; top: 0; bottom: 0;
+  left: clamp(12px, 3.2vw, 46px);
+  width: 3px; z-index: 60; pointer-events: none;
+}
+#spine-track { position: absolute; inset: 0; background: rgba(60, 80, 55, 0.14); border-radius: 3px; }
+#spine-fill {
+  position: absolute; left: 0; top: 0; width: 100%; height: 0;
+  border-radius: 3px;
+  background: linear-gradient(#a9c69c 0%, #7f9a6f 40%, #e087a0 100%);
+  box-shadow: 0 0 12px rgba(224, 135, 160, 0.45);
+}
+#spine-mascot {
+  position: absolute; left: 50%; top: 0;
+  width: 42px; height: 42px; margin: -21px 0 0 -21px;
+  will-change: transform;
+  filter: drop-shadow(0 6px 10px rgba(224, 135, 160, 0.4));
+}
+#spine-mascot .mascot { width: 42px; height: 42px; font-size: 21px; }
+@media (max-width: 1023px) { #spine, #grain { display: none; } }
+
+/* Accents manuscrits (Caveat) — l'identité « dessinée à la main » */
+.eyebrow {
+  font-family: var(--font-hand);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.eyebrow::before { width: 26px; }
+.mark { font-family: var(--font-hand); font-weight: 700; font-size: 1.18em; letter-spacing: 0.01em; }
+
+/* Titres : Fraunces, optique auto */
+.h2, .hero-title, .h2--light { font-optical-sizing: auto; }
+
+/* Petite annotation manuscrite avec flèche */
+.note-hand {
+  font-family: var(--font-hand);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: #c06783;
+  line-height: 1.1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}

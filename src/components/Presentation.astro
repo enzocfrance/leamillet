@@ -26,6 +26,9 @@ const credentials = [
       <!-- Carte photo -->
       <aside class="pres-photocard reveal reveal-left">
         <figure class="pres-frame">
+          <span class="pres-note note-hand">C'est moi&nbsp;!
+            <span class="pres-note-arrow"><Scribble variant="arrow" width={44} stroke="#e087a0" /></span>
+          </span>
           <img src="/pictures/lea-photo.png" alt="Léa Millet, psychologue clinicienne D.E" loading="lazy" width="291" height="418" />
           <figcaption class="pres-tag">
             <span class="pres-tag-name">Léa Millet</span>
@@ -107,6 +110,16 @@ const credentials = [
     object-fit: cover;
     border-radius: 16px;
   }
+  .pres-note {
+    position: absolute;
+    top: -30px; right: 2px;
+    z-index: 3;
+    font-size: 1.55rem;
+    transform: rotate(-7deg);
+    pointer-events: none;
+  }
+  .pres-note-arrow { display: inline-block; line-height: 0; transform: rotate(24deg) translateY(4px); }
+  @media (max-width: 900px) { .pres-note { top: -26px; right: 8px; } }
   .pres-tag {
     position: absolute;
     left: 16px; bottom: 16px;
@@ -117,14 +130,14 @@ const credentials = [
     padding: 0.5rem 0.85rem;
     box-shadow: 0 10px 24px -12px rgba(47, 74, 44, 0.5);
   }
-  .pres-tag-name { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.92rem; color: #2b342d; }
-  .pres-tag-role { font-family: 'Montserrat', sans-serif; font-size: 0.72rem; color: #6f8064; }
+  .pres-tag-name { font-family: var(--font-display); font-weight: 700; font-size: 0.92rem; color: #2b342d; }
+  .pres-tag-role { font-family: var(--font-body); font-size: 0.72rem; color: #6f8064; }
 
   .pres-creds { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
   @media (min-width: 900px) { .pres-creds { grid-template-columns: 1fr; } }
   .pres-cred {
     display: flex; align-items: center; gap: 0.55rem;
-    font-family: 'Montserrat', sans-serif; font-size: 0.8rem; line-height: 1.3;
+    font-family: var(--font-body); font-size: 0.8rem; line-height: 1.3;
     color: #2f3f27;
     background: rgba(255, 255, 255, 0.62);
     border: 1px solid rgba(255, 255, 255, 0.7);
@@ -137,7 +150,7 @@ const credentials = [
   .pres-bio { position: relative; padding: clamp(1.6rem, 3vw, 2.5rem); }
   .pres-scribble { position: absolute; top: -20px; right: 24px; line-height: 0; }
   .pres-bio p {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.96rem; line-height: 1.9; color: #45564a;
     margin-bottom: 1.2rem;
   }
@@ -150,7 +163,7 @@ const credentials = [
     background: linear-gradient(135deg, rgba(168,200,147,0.18), rgba(240,163,184,0.12));
     border-left: 4px solid #93ab82;
     border-radius: 0 16px 16px 0;
-    font-family: 'Quicksand', sans-serif;
+    font-family: var(--font-display);
     font-weight: 500;
     font-size: 1rem; line-height: 1.65; color: #2f4a2c;
   }
@@ -163,7 +176,7 @@ const credentials = [
   .pres-quote strong { color: #1f3a1f; font-weight: 700; }
   .pres-quote cite {
     display: block; margin-top: 0.7rem;
-    font-family: 'Quicksand', sans-serif; font-style: normal; font-weight: 700;
+    font-family: var(--font-display); font-style: normal; font-weight: 700;
     font-size: 0.82rem; letter-spacing: 0.04em; color: #6a7d5e;
   }
   .pres-quote cite::before { content: '— '; }
