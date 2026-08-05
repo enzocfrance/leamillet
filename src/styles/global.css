@@ -38,6 +38,9 @@ html {
 
 body {
   position: relative;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
   font-family: var(--font-body);
   color: var(--ink);
   background: #d7e6cc;
@@ -46,6 +49,8 @@ body {
   -webkit-font-smoothing: antialiased;
   letter-spacing: -0.005em;
 }
+/* Footer plaqué en bas quand le contenu est plus court que l'écran */
+.footer { margin-top: auto; }
 @keyframes page-in { to { opacity: 1; } }
 
 /* Custom scrollbar */
