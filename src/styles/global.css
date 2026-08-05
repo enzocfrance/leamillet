@@ -117,12 +117,8 @@ body {
 [data-parallax] { will-change: transform; }
 
 /* ═══════════════════════════════════════════════════
-   NAV — état compacté au scroll
+   NAV — tout le style vit dans Navbar.astro (capsule flottante)
 ═══════════════════════════════════════════════════ */
-.nav { transition: background 0.35s ease, box-shadow 0.35s ease; }
-.nav-inner { transition: height 0.35s var(--expo-out); }
-.nav.scrolled { background: rgba(213, 230, 204, 0.95); box-shadow: 0 6px 22px rgba(60, 80, 55, 0.13); }
-.nav.scrolled .nav-inner { height: 54px; }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1 !important; transform: none !important; transition: none; }

@@ -14,29 +14,43 @@ const navItems = [
 ];
 ---
 <header id="nav" class:list={['nav', { 'nav--sub': !isHome }]}>
-  <div class="nav-inner">
+  <div class="nav-cap">
 
     <a href={isHome ? '#accueil' : '/'} class="nav-brand" aria-label="Millet Léa — Accueil">
-      <img src="/pictures/logo.png" alt="Logo Millet Léa" />
-      <span class="nav-brand-name">Millet&nbsp;Léa</span>
+      <span class="nav-logo"><img src="/pictures/logo.png" alt="Logo Millet Léa" /></span>
+      <span class="nav-brand-txt">
+        <span class="nav-brand-name">Millet&nbsp;Léa</span>
+        <span class="nav-brand-sub">psychologue</span>
+      </span>
     </a>
 
     {isHome ? (
       <>
         <nav class="nav-links" aria-label="Navigation principale">
           {navItems.map(item => (
-            <a href={`#${item.id}`} class="nav-link" data-section={item.id}>{item.label}</a>
+            <a href={`#${item.id}`} class="nav-link" data-section={item.id}>
+              <span>{item.label}</span>
+              <span class="nav-squiggle" aria-hidden="true">
+                <svg viewBox="0 0 64 8" preserveAspectRatio="none"><path pathLength="100" d="M1,5 q6,-6 12.8,0 t12.8,0 t12.8,0 t12.8,0 t12.8,0"/></svg>
+              </span>
+            </a>
           ))}
         </nav>
 
-        <a href="#contact" class="nav-cta">Prendre RDV</a>
+        <a href="#contact" class="nav-cta">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Prendre RDV
+        </a>
 
         <button id="nav-burger" class="nav-burger" aria-label="Ouvrir le menu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </>
     ) : (
-      <a href="/" class="nav-cta">← Retour au site</a>
+      <a href="/" class="nav-cta nav-cta--back">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+        Retour au site
+      </a>
     )}
   </div>
 
@@ -55,127 +69,169 @@ const navItems = [
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 1000;
-    background: rgba(215, 230, 204, 0.82);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(147, 171, 130, 0.25);
+    padding: 0.75rem 1rem 0;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
   }
-  .nav-inner {
-    max-width: 1080px;
-    margin: 0 auto;
-    height: 62px;
-    padding: 0 1.1rem;
+  .nav > * { pointer-events: auto; }
+
+  /* Capsule flottante */
+  .nav-cap {
+    width: 100%;
+    max-width: 1000px;
+    height: 60px;
     display: flex;
     align-items: center;
     gap: 1rem;
-  }
-
-  .nav-brand { display: inline-flex; align-items: center; gap: 0.55rem; text-decoration: none; flex-shrink: 0; }
-  .nav-brand img {
-    width: 38px; height: 38px;
-    border-radius: 50%;
-    object-fit: contain;
-    background: #fff;
-    padding: 4px;
-    box-shadow: 0 3px 12px rgba(60, 80, 55, 0.18);
-  }
-  .nav-brand-name {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1rem;
-    letter-spacing: 0.01em;
-    color: #2b342d;
-  }
-
-  .nav-links { display: flex; align-items: center; gap: 0.15rem; margin-left: auto; }
-  .nav-link {
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: 0.82rem;
-    letter-spacing: 0.02em;
-    color: #46523f;
-    text-decoration: none;
-    padding: 0.4rem 0.75rem;
+    padding: 0 0.7rem 0 0.75rem;
     border-radius: 999px;
-    transition: background 0.25s ease, color 0.25s ease;
+    background: rgba(251, 253, 247, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    box-shadow: 0 14px 34px -18px rgba(47, 74, 44, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(14px) saturate(1.3);
+    -webkit-backdrop-filter: blur(14px) saturate(1.3);
+    transition: height 0.4s var(--expo-out), background 0.4s ease, box-shadow 0.4s ease, max-width 0.4s var(--expo-out);
   }
-  .nav-link:hover { background: rgba(255,255,255,0.55); color: #2b342d; }
-  .nav-link.active { background: #93ab82; color: #fff; }
+  .nav.scrolled .nav-cap {
+    height: 52px;
+    max-width: 920px;
+    background: rgba(251, 253, 247, 0.92);
+    box-shadow: 0 16px 38px -16px rgba(47, 74, 44, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
 
+  /* Marque */
+  .nav-brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; flex-shrink: 0; }
+  .nav-logo {
+    position: relative;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    background: #fff;
+    border: 2px solid rgba(240, 163, 184, 0.55);
+    box-shadow: 0 4px 12px -4px rgba(224, 135, 160, 0.5);
+    overflow: hidden;
+    transition: transform 0.4s var(--spring), border-color 0.3s ease;
+  }
+  .nav-logo img { width: 30px; height: 30px; object-fit: contain; }
+  .nav-brand:hover .nav-logo { transform: rotate(-6deg) scale(1.06); border-color: #e087a0; }
+  .nav-brand-txt { display: flex; flex-direction: column; line-height: 1; }
+  .nav-brand-name { font-family: var(--font-display); font-weight: 700; font-size: 1.12rem; color: #2b342d; letter-spacing: -0.01em; }
+  .nav-brand-sub { font-family: var(--font-hand); font-size: 0.92rem; color: #d0799a; margin-top: 1px; }
+
+  /* Liens */
+  .nav-links { display: flex; align-items: center; gap: 0.1rem; margin-left: auto; }
+  .nav-link {
+    position: relative;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.86rem;
+    color: #55634b;
+    text-decoration: none;
+    padding: 0.5rem 0.7rem;
+    border-radius: 999px;
+    transition: color 0.25s ease;
+  }
+  .nav-link > span:first-child { position: relative; z-index: 1; }
+  .nav-link:hover { color: #22301c; }
+  .nav-link.active { color: #c06783; }
+
+  .nav-squiggle {
+    position: absolute;
+    left: 0.55rem; right: 0.55rem; bottom: 0.28rem;
+    height: 7px; pointer-events: none;
+  }
+  .nav-squiggle svg { width: 100%; height: 100%; overflow: visible; }
+  .nav-squiggle path {
+    fill: none;
+    stroke: #e087a0;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    transition: stroke-dashoffset 0.45s var(--expo-out);
+  }
+  .nav-link:hover .nav-squiggle path,
+  .nav-link.active .nav-squiggle path { stroke-dashoffset: 0; }
+
+  /* CTA */
   .nav-cta {
     flex-shrink: 0;
-    font-family: var(--font-display);
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: var(--font-body);
     font-weight: 600;
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     color: #fff;
-    background: #e087a0;
-    padding: 0.5rem 1.1rem;
+    background: linear-gradient(135deg, #f3aabc, #e087a0);
+    padding: 0.55rem 1.05rem;
     border-radius: 999px;
     text-decoration: none;
-    box-shadow: 0 6px 16px rgba(224, 135, 160, 0.35);
-    transition: transform 0.3s var(--spring), box-shadow 0.3s ease, background 0.3s ease;
+    box-shadow: 0 8px 18px -6px rgba(224, 135, 160, 0.55);
+    transition: transform 0.3s var(--spring), box-shadow 0.3s ease, filter 0.3s ease;
   }
-  .nav--sub .nav-cta { background: #93ab82; box-shadow: 0 6px 16px rgba(127,154,111,0.35); }
-  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(224, 135, 160, 0.5); }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 26px -6px rgba(224, 135, 160, 0.7); filter: saturate(1.08); }
+  .nav-cta svg { opacity: 0.9; }
+  .nav-cta--back { background: linear-gradient(135deg, #a9c69c, #7f9a6f); box-shadow: 0 8px 18px -6px rgba(127, 154, 111, 0.5); margin-left: auto; }
 
   /* Burger */
   .nav-burger {
     display: none;
     margin-left: auto;
-    width: 40px; height: 40px;
+    width: 42px; height: 42px;
     flex-direction: column; align-items: center; justify-content: center; gap: 5px;
     background: #fff;
-    border: none;
+    border: 1.5px solid rgba(240, 163, 184, 0.5);
     border-radius: 50%;
-    box-shadow: 0 3px 12px rgba(60, 80, 55, 0.18);
+    box-shadow: 0 4px 12px -5px rgba(224, 135, 160, 0.5);
     cursor: pointer;
   }
-  .nav-burger span {
-    display: block; width: 18px; height: 2px; border-radius: 2px;
-    background: #46523f;
-    transition: transform 0.35s var(--spring), opacity 0.2s ease;
-  }
+  .nav-burger span { display: block; width: 18px; height: 2px; border-radius: 2px; background: #55634b; transition: transform 0.4s var(--spring), opacity 0.2s ease; }
   .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .nav-burger.open span:nth-child(2) { opacity: 0; }
   .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-  /* Menu mobile */
+  /* Menu mobile — carte arrondie sous la capsule */
   .nav-mobile {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    padding: 0.5rem 1.1rem 1rem;
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.4s var(--expo-out), opacity 0.3s ease, padding 0.3s ease;
+    position: absolute;
+    top: calc(100% - 0.2rem); left: 1rem; right: 1rem;
+    display: flex; flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.6rem;
+    border-radius: 22px;
+    background: rgba(251, 253, 247, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 24px 50px -20px rgba(47, 74, 44, 0.45);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    transform-origin: top center;
+    transform: translateY(-10px) scale(0.98);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.35s var(--expo-out);
   }
-  .nav-mobile.open { max-height: 460px; opacity: 1; }
+  .nav-mobile.open { opacity: 1; transform: none; pointer-events: auto; }
   .nav-mobile-link {
     font-family: var(--font-display);
-    font-weight: 500;
-    font-size: 1rem;
+    font-weight: 600;
+    font-size: 1.05rem;
     color: #46523f;
     text-decoration: none;
-    padding: 0.7rem 0.5rem;
-    border-bottom: 1px solid rgba(147, 171, 130, 0.2);
+    padding: 0.75rem 0.9rem;
+    border-radius: 14px;
+    transition: background 0.2s ease, color 0.2s ease;
   }
-  .nav-mobile-link.active { color: #e087a0; }
+  .nav-mobile-link:hover, .nav-mobile-link.active { background: rgba(240, 163, 184, 0.12); color: #c06783; }
   .nav-mobile-cta {
-    margin-top: 0.6rem;
-    text-align: center;
-    font-family: var(--font-display);
-    font-weight: 600;
-    color: #fff;
-    background: #e087a0;
-    padding: 0.7rem;
-    border-radius: 999px;
-    text-decoration: none;
+    margin-top: 0.4rem; text-align: center;
+    font-family: var(--font-body); font-weight: 600; font-size: 0.92rem;
+    color: #fff; background: linear-gradient(135deg, #f3aabc, #e087a0);
+    padding: 0.8rem; border-radius: 14px; text-decoration: none;
+    box-shadow: 0 10px 22px -8px rgba(224, 135, 160, 0.6);
   }
 
-  @media (max-width: 860px) {
-    .nav-links, .nav-inner > .nav-cta { display: none; }
+  @media (max-width: 900px) {
+    .nav-links, .nav-cap > .nav-cta:not(.nav-cta--back) { display: none; }
     .nav-burger { display: flex; }
+    .nav-brand-sub { display: none; }
   }
 </style>
 
@@ -186,7 +242,6 @@ const navItems = [
     const links   = document.querySelectorAll<HTMLElement>('.nav-link, .nav-mobile-link');
     const ids     = ['accueil','presentation','cabinet','pratique','tarification','contact'];
 
-    /* Burger toggle */
     let open = false;
     function setMenu(v: boolean) {
       open = v;
@@ -197,8 +252,11 @@ const navItems = [
     }
     burger?.addEventListener('click', () => setMenu(!open));
     mobile?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', (e: KeyboardEvent) => { if (e.key === 'Escape' && open) setMenu(false); });
 
-    /* Section active */
+    /* Actif par défaut : Accueil */
+    links.forEach(l => l.classList.toggle('active', l.dataset.section === 'accueil'));
+
     if ('IntersectionObserver' in window) {
       const obs = new IntersectionObserver(entries => {
         entries.forEach(e => {
@@ -207,7 +265,7 @@ const navItems = [
             links.forEach(l => l.classList.toggle('active', l.dataset.section === id));
           }
         });
-      }, { threshold: 0.25, rootMargin: '-62px 0px -45% 0px' });
+      }, { threshold: 0.25, rootMargin: '-70px 0px -45% 0px' });
       ids.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
     }
   })();
